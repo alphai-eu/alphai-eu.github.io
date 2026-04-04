@@ -3,34 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Alphai — Your daily AI-powered market intelligence for European traders. Free newsletter covering stocks, crypto, and prediction markets.">
-<meta property="og:title" content="Alphai — AI Edge in European Markets">
-<meta property="og:description" content="Your daily AI market brief. Free. No code. No Wall Street budget.">
-<meta property="og:url" content="https://alphai.eu">
-<title>Alphai — AI Edge in European Markets</title>
+<meta name="description" content="Alphai — Free daily AI market intelligence for European traders. No signup fee. No BS.">
+<title>Alphai — Free Daily Market Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Inconsolata:wght@300;400;500&family=Hind:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Inconsolata:wght@300;400;500;600&family=Hind:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --noir: #05070a;
-  --ink: #0d1117;
-  --card: #111820;
-  --line: #1c2a38;
-  --line2: #243444;
+  --noir: #000000;
+  --ink: #0a0a0a;
+  --card: #111111;
+  --line: #1e1e1e;
+  --line2: #2a2a2a;
   --gold: #c8a84b;
-  --gold-dim: #8a6e2a;
-  --gold-pale: #f0dea0;
-  --text: #d8e8f2;
-  --muted: #486070;
-  --muted2: #7090a8;
-  --green: #1db954;
-  --red: #e53935;
-  --white: #ffffff;
+  --gold2: #e8c97a;
+  --gold-pale: #f5e6b8;
+  --text: #ffffff;
+  --muted: #888888;
+  --muted2: #aaaaaa;
+  --green: #00e676;
+  --red: #ff5252;
+  --accent: #c8a84b;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
-
+html { scroll-behavior: smooth; }
 body {
   background: var(--noir);
   color: var(--text);
@@ -40,672 +36,664 @@ body {
 }
 
 /* ── CURSOR ── */
-.cur { position: fixed; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: opacity .2s; }
-.cur-ring { position: fixed; width: 28px; height: 28px; border: 1px solid rgba(200,168,75,.35); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+.cur { position: fixed; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
+.cur-ring { position: fixed; width: 28px; height: 28px; border: 1px solid rgba(200,168,75,.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
 
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 48px;
-  transition: background .4s, border-color .4s;
+  padding: 16px 48px;
+  transition: background .3s, border-color .3s;
   border-bottom: 1px solid transparent;
 }
-nav.stuck { background: rgba(5,7,10,.9); backdrop-filter: blur(20px); border-color: var(--line); }
-.logo { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: var(--gold); text-decoration: none; letter-spacing: -.5px; }
-.nav-right { display: flex; align-items: center; gap: 32px; }
-.nav-link { font-family: 'Inconsolata', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); text-decoration: none; transition: color .2s; }
+nav.stuck { background: rgba(0,0,0,.95); backdrop-filter: blur(20px); border-color: var(--line2); }
+.logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--gold); text-decoration: none; letter-spacing: -.5px; }
+.nav-right { display: flex; align-items: center; gap: 28px; }
+.nav-link { font-family: 'Inconsolata', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s; }
 .nav-link:hover { color: var(--gold); }
-.nav-btn { font-family: 'Inconsolata', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; background: var(--gold); color: var(--noir); border: none; padding: 9px 18px; cursor: none; font-weight: 500; transition: background .2s, transform .15s; }
-.nav-btn:hover { background: var(--gold-pale); transform: translateY(-1px); }
+.nav-cta {
+  font-family: 'Inconsolata', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  background: var(--gold); color: var(--noir); border: none; padding: 9px 18px; cursor: pointer;
+  font-weight: 600; transition: background .2s, transform .15s;
+}
+.nav-cta:hover { background: var(--gold2); transform: translateY(-1px); }
 
-/* ── HERO ── */
+/* ── FREE BADGE — top of page ── */
+.free-banner {
+  background: var(--gold);
+  color: var(--noir);
+  text-align: center;
+  padding: 8px;
+  font-family: 'Inconsolata', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  position: relative;
+  z-index: 100;
+}
+
+/* ── HERO — left: form, right: mockup ── */
 .hero {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 0;
-  padding: 0;
-  position: relative;
-  overflow: hidden;
+  padding-top: 52px; /* nav height */
 }
 
-/* Left panel */
+/* LEFT PANEL */
 .hero-left {
-  padding: 120px 64px 80px 64px;
-  position: relative;
-  z-index: 2;
-}
-
-/* Right panel — terminal mockup */
-.hero-right {
-  height: 100vh;
-  background: var(--ink);
-  border-left: 1px solid var(--line);
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  padding: 40px;
+  padding: 80px 64px 80px 64px;
+  border-right: 1px solid var(--line2);
   position: relative;
-  overflow: hidden;
-}
-.hero-right::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(28,42,56,.25) 28px, rgba(28,42,56,.25) 29px);
-  pointer-events: none;
 }
 
-/* Scan line animation */
-.scanline {
-  position: absolute;
-  left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(200,168,75,.15), transparent);
-  animation: scan 6s linear infinite;
-  pointer-events: none;
-  z-index: 1;
+.free-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(200,168,75,.12);
+  border: 1px solid rgba(200,168,75,.4);
+  padding: 6px 14px;
+  margin-bottom: 28px;
+  width: fit-content;
 }
-@keyframes scan { from { top: 0; } to { top: 100%; } }
+.free-pill-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse-dot 1.5s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.3} }
+.free-pill-text { font-family: 'Inconsolata', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
 
-.terminal {
-  width: 100%;
-  max-width: 480px;
-  background: var(--noir);
-  border: 1px solid var(--line2);
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(42px, 4.5vw, 72px);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -1.5px;
+  margin-bottom: 20px;
+}
+h1 em { font-style: italic; color: var(--gold); }
+
+/* 3 VALUE POINTS — max 3, highlighted */
+.value-points {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+.vp {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-left: 2px solid var(--gold);
+  background: rgba(200,168,75,.04);
+}
+.vp-num { font-family: 'Inconsolata', monospace; font-size: 10px; color: var(--gold); letter-spacing: 1px; flex-shrink: 0; margin-top: 2px; }
+.vp-text { font-size: 14px; color: var(--muted2); line-height: 1.6; }
+.vp-text strong { color: var(--text); }
+
+/* URGENCY LINE */
+.urgency {
   font-family: 'Inconsolata', monospace;
-  position: relative;
-  z-index: 2;
-}
-.t-bar {
-  background: var(--card);
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--gold);
+  margin-bottom: 16px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.t-dot { width: 8px; height: 8px; border-radius: 50%; }
-.t-title { font-size: 10px; letter-spacing: 2px; color: var(--muted); margin-left: 8px; }
-.t-body { padding: 20px; font-size: 12px; line-height: 1.9; }
-.t-date { color: var(--gold); font-size: 10px; letter-spacing: 3px; margin-bottom: 14px; }
-.t-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 2px; }
-.t-sym { color: var(--text); font-weight: 500; min-width: 80px; }
-.t-price { color: var(--muted2); min-width: 70px; }
-.t-chg { font-size: 11px; }
-.up { color: var(--green); }
-.dn { color: var(--red); }
-.t-div { border: none; border-top: 1px solid var(--line); margin: 12px 0; }
-.t-macro { font-size: 11px; color: var(--muted2); line-height: 1.7; }
-.t-macro span { color: var(--gold); }
-.t-cursor { display: inline-block; width: 8px; height: 14px; background: var(--gold); animation: blink .8s step-end infinite; vertical-align: middle; margin-left: 2px; }
-@keyframes blink { 50% { opacity: 0; } }
+.urgency::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--gold); }
 
-/* Hero text */
-.hero-kicker {
-  font-family: 'Inconsolata', monospace;
-  font-size: 10px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.hero-kicker::before { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--gold); }
-
-h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(44px, 5.5vw, 80px);
-  font-weight: 700;
-  line-height: 1.0;
-  letter-spacing: -1.5px;
-  margin-bottom: 24px;
-}
-h1 em { font-style: italic; color: var(--gold); }
-
-.hero-sub {
-  font-size: 16px;
-  color: var(--muted2);
-  line-height: 1.75;
-  max-width: 440px;
-  margin-bottom: 40px;
-}
-.hero-sub strong { color: var(--text); font-weight: 500; }
-
-/* Email form */
+/* FORM */
 .form-wrap {
   display: flex;
   border: 1px solid var(--line2);
   max-width: 440px;
-  margin-bottom: 16px;
   transition: border-color .2s;
+  margin-bottom: 10px;
 }
 .form-wrap:focus-within { border-color: var(--gold); }
 .form-input {
-  flex: 1;
-  background: var(--card);
-  border: none;
-  padding: 14px 18px;
-  font-family: 'Inconsolata', monospace;
-  font-size: 13px;
-  color: var(--text);
-  outline: none;
+  flex: 1; background: var(--card); border: none;
+  padding: 14px 18px; font-family: 'Inconsolata', monospace;
+  font-size: 13px; color: var(--text); outline: none;
 }
-.form-input::placeholder { color: var(--muted); }
+.form-input::placeholder { color: #555; }
 .form-submit {
-  background: var(--gold);
-  color: var(--noir);
-  border: none;
-  padding: 14px 24px;
-  font-family: 'Inconsolata', monospace;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: 500;
-  cursor: none;
-  white-space: nowrap;
+  background: var(--gold); color: var(--noir); border: none;
+  padding: 14px 22px; font-family: 'Inconsolata', monospace;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  font-weight: 600; cursor: pointer; white-space: nowrap;
   transition: background .2s;
 }
-.form-submit:hover { background: var(--gold-pale); }
-.form-note {
-  font-family: 'Inconsolata', monospace;
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 1px;
-}
+.form-submit:hover { background: var(--gold2); }
+.form-note { font-family: 'Inconsolata', monospace; font-size: 10px; color: #555; letter-spacing: .5px; }
 
-/* Stats strip */
-.stats {
-  display: flex;
-  gap: 40px;
-  margin-top: 56px;
-  padding-top: 40px;
-  border-top: 1px solid var(--line);
-}
-.stat-val {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 30px;
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-}
-.stat-lbl {
-  font-family: 'Inconsolata', monospace;
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 4px;
-}
-
-/* ── TICKER STRIP ── */
-.ticker-strip {
-  background: var(--card);
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  padding: 10px 0;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.ticker-inner {
-  display: inline-flex;
-  gap: 0;
-  animation: ticker 22s linear infinite;
-}
-.tick { display: inline-flex; align-items: center; gap: 6px; padding: 0 28px; border-right: 1px solid var(--line); font-family: 'Inconsolata', monospace; font-size: 11px; }
-.tick-name { color: var(--muted2); }
-.tick-val { color: var(--text); font-weight: 500; }
-@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-/* ── SECTIONS ── */
-section { padding: 100px 64px; position: relative; }
-
-.sec-label {
-  font-family: 'Inconsolata', monospace;
-  font-size: 10px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 20px;
+/* SOCIAL PROOF MINI */
+.social-proof-mini {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line2);
 }
-.sec-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--gold); }
+.avatars { display: flex; }
+.av { width: 28px; height: 28px; border-radius: 50%; background: var(--line2); border: 2px solid var(--noir); margin-right: -8px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--gold); }
+.sp-text { font-family: 'Inconsolata', monospace; font-size: 10px; color: var(--muted); letter-spacing: .5px; margin-left: 12px; }
+.sp-text strong { color: var(--gold); }
 
-h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(32px, 4vw, 56px);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -1px;
-  margin-bottom: 16px;
-}
-h2 em { font-style: italic; color: var(--gold); }
-
-.sec-sub { font-size: 16px; color: var(--muted2); max-width: 520px; line-height: 1.7; margin-bottom: 56px; }
-
-/* ── HOW IT WORKS ── */
-.how-section { background: var(--ink); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.steps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 56px; }
-.step { background: var(--card); padding: 36px 32px; position: relative; overflow: hidden; transition: background .3s; }
-.step:hover { background: #161f2a; }
-.step-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 64px;
-  font-weight: 700;
-  color: var(--line2);
-  line-height: 1;
-  margin-bottom: 16px;
-  transition: color .3s;
-}
-.step:hover .step-num { color: var(--gold-dim); }
-.step-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; margin-bottom: 10px; }
-.step-desc { font-size: 14px; color: var(--muted2); line-height: 1.7; }
-.step-tag { display: inline-block; font-family: 'Inconsolata', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 3px 8px; border: 1px solid var(--gold-dim); color: var(--gold); margin-top: 14px; }
-
-/* ── NEWSLETTER PREVIEW ── */
-.preview-section {}
-.preview-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; margin-top: 56px; }
-.preview-text h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; margin-bottom: 12px; }
-.preview-text p { font-size: 14px; color: var(--muted2); line-height: 1.8; margin-bottom: 16px; }
-.feature-li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: 14px; color: var(--muted2); }
-.feature-li::before { content: '→'; color: var(--gold); font-family: 'Inconsolata', monospace; flex-shrink: 0; margin-top: 1px; }
-
-.nl-mock {
+/* RIGHT PANEL — email mockup */
+.hero-right {
   background: var(--ink);
-  border: 1px solid var(--line2);
-  font-family: 'Inconsolata', monospace;
-}
-.nl-head { background: var(--card); padding: 14px 20px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
-.nl-logo-sm { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 700; color: var(--gold); }
-.nl-date-sm { font-size: 9px; letter-spacing: 2px; color: var(--muted); }
-.nl-body { padding: 22px; }
-.nl-tag { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-.nl-headline { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
-.nl-text { font-size: 11px; color: var(--muted2); line-height: 1.8; margin-bottom: 16px; }
-.nl-ticker-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 11px; }
-.nl-ticker-row:last-child { border-bottom: none; }
-.nl-sym { color: var(--text); font-weight: 500; }
-.nl-chg { font-size: 10px; }
-.nl-macro-box { background: var(--noir); padding: 12px; margin-top: 14px; border-left: 2px solid var(--gold); font-size: 11px; color: var(--muted2); line-height: 1.7; }
-
-/* ── MUSK PRINCIPLES BANNER ── */
-.principles-section { background: var(--ink); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 60px 64px; }
-.principles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 40px; }
-.principle-cell { background: var(--card); padding: 24px 20px; }
-.p-num { font-family: 'Inconsolata', monospace; font-size: 9px; letter-spacing: 3px; color: var(--muted); margin-bottom: 8px; }
-.p-title { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 6px; line-height: 1.3; }
-.p-desc { font-size: 12px; color: var(--muted2); line-height: 1.6; }
-
-/* ── ROADMAP ── */
-.roadmap-section {}
-.roadmap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 56px; }
-.rm-cell { background: var(--card); padding: 28px 24px; }
-.rm-phase { font-family: 'Inconsolata', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-.rm-period { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
-.rm-item { font-size: 12px; color: var(--muted2); margin-bottom: 6px; padding-left: 12px; border-left: 1px solid var(--line2); line-height: 1.5; }
-.rm-item.active { color: var(--text); border-left-color: var(--gold); }
-.rm-kpi { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); font-family: 'Inconsolata', monospace; font-size: 10px; color: var(--gold); }
-
-/* ── CTA ── */
-.cta-section {
-  text-align: center;
-  padding: 160px 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 48px;
   position: relative;
   overflow: hidden;
 }
-.cta-section::before {
+
+/* Grid lines background */
+.hero-right::before {
   content: '';
-  position: absolute;
-  width: 700px; height: 700px;
-  background: radial-gradient(circle, rgba(200,168,75,.055) 0%, transparent 70%);
-  border-radius: 50%;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(200,168,75,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,168,75,.03) 1px, transparent 1px);
+  background-size: 32px 32px;
   pointer-events: none;
 }
-.cta-section h2 { max-width: 700px; margin: 0 auto 20px; }
-.cta-section .sec-sub { margin: 0 auto 40px; text-align: center; }
-.cta-form { max-width: 460px; margin: 0 auto; }
+
+/* LIVE DATA TICKER inside hero right */
+.live-badge {
+  position: absolute;
+  top: 20px; left: 20px;
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(0,230,118,.1);
+  border: 1px solid rgba(0,230,118,.3);
+  padding: 4px 10px;
+  font-family: 'Inconsolata', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--green);
+  text-transform: uppercase;
+  z-index: 2;
+}
+.live-dot { width: 5px; height: 5px; background: var(--green); border-radius: 50%; animation: pulse-dot 1.2s ease-in-out infinite; }
+
+.email-mockup {
+  width: 100%;
+  max-width: 420px;
+  background: var(--noir);
+  border: 1px solid var(--line2);
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 80px rgba(200,168,75,.06);
+}
+.em-bar {
+  background: var(--card);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line2);
+  display: flex; align-items: center; gap: 8px;
+}
+.em-dot { width: 8px; height: 8px; border-radius: 50%; }
+.em-title { font-family: 'Inconsolata', monospace; font-size: 9px; letter-spacing: 2px; color: var(--muted); margin-left: 6px; }
+.em-body { padding: 18px; }
+.em-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.em-logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--gold); }
+.em-date { font-family: 'Inconsolata', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; }
+.em-tag { font-family: 'Inconsolata', monospace; font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+
+/* Live market grid */
+.em-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--line2); border: 1px solid var(--line2); margin-bottom: 14px; }
+.em-cell { background: #0a0a0a; padding: 8px 10px; }
+.em-sym { font-family: 'Inconsolata', monospace; font-size: 8px; color: var(--muted); letter-spacing: 1px; margin-bottom: 2px; }
+.em-price { font-family: 'Inconsolata', monospace; font-size: 12px; font-weight: 600; color: var(--text); }
+.em-chg { font-family: 'Inconsolata', monospace; font-size: 9px; margin-top: 1px; }
+.up { color: var(--green); }
+.dn { color: var(--red); }
+
+.em-signal {
+  background: #0d0d0d;
+  border-left: 2px solid var(--gold);
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+.em-signal-label { font-family: 'Inconsolata', monospace; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+.em-signal-text { font-family: 'Inconsolata', monospace; font-size: 10px; line-height: 1.6; color: #aaa; }
+.em-signal-text strong { color: #fff; }
+
+.em-pm { margin-bottom: 8px; }
+.em-pm-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--line); font-family: 'Inconsolata', monospace; font-size: 10px; }
+.em-pm-row:last-child { border-bottom: none; }
+.em-pm-event { color: #888; }
+.em-pm-val { font-weight: 600; }
+
+.em-footer { border-top: 1px solid var(--line2); padding-top: 10px; display: flex; justify-content: space-between; }
+.em-footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 700; color: var(--gold); }
+.em-footer-note { font-family: 'Inconsolata', monospace; font-size: 8px; color: #444; }
+
+/* ── LIVE TICKER STRIP ── */
+.ticker-strip {
+  background: var(--card); border-top: 1px solid var(--line2); border-bottom: 1px solid var(--line2);
+  padding: 10px 0; overflow: hidden; white-space: nowrap;
+}
+.ticker-inner { display: inline-flex; gap: 0; animation: ticker 20s linear infinite; }
+.tick { display: inline-flex; align-items: center; gap: 6px; padding: 0 24px; border-right: 1px solid var(--line2); font-family: 'Inconsolata', monospace; font-size: 11px; }
+.tick-name { color: var(--muted); }
+.tick-val { color: var(--text); font-weight: 500; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── WHAT YOU GET ── */
+.what-section {
+  padding: 100px 64px;
+  background: var(--ink);
+  border-top: 1px solid var(--line2);
+  border-bottom: 1px solid var(--line2);
+}
+.section-eyebrow {
+  font-family: 'Inconsolata', monospace; font-size: 9px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-eyebrow::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--gold); }
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 3.5vw, 52px);
+  font-weight: 700; line-height: 1.05; letter-spacing: -1px; margin-bottom: 16px;
+}
+h2 em { font-style: italic; color: var(--gold); }
+.sec-sub { font-size: 15px; color: var(--muted2); max-width: 500px; line-height: 1.7; margin-bottom: 56px; }
+
+/* 3 POINTS ONLY — Musk Algorithm */
+.three-points {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--line2);
+  border: 1px solid var(--line2);
+}
+.point-card {
+  background: var(--noir);
+  padding: 40px 32px;
+  position: relative;
+  overflow: hidden;
+  transition: background .3s;
+}
+.point-card:hover { background: #0a0a0a; }
+.point-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--gold); transform: scaleX(0); transform-origin: left;
+  transition: transform .4s ease;
+}
+.point-card:hover::before { transform: scaleX(1); }
+.point-icon { font-size: 28px; margin-bottom: 16px; }
+.point-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
+.point-desc { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+.point-tag { display: inline-block; font-family: 'Inconsolata', monospace; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(200,168,75,.3); padding: 3px 8px; margin-top: 14px; }
+
+/* ── HOW IT WORKS — 3 steps only ── */
+.how-section { padding: 100px 64px; }
+.steps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; margin-top: 56px; }
+.step { padding: 32px 0; border-top: 1px solid var(--line2); }
+.step-num { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 700; color: var(--line2); line-height: 1; margin-bottom: 16px; transition: color .3s; }
+.step:hover .step-num { color: var(--gold); }
+.step-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.step-desc { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+
+/* ── MUSK STRIP ── */
+.musk-strip {
+  background: var(--card);
+  border-top: 1px solid var(--line2);
+  border-bottom: 1px solid var(--line2);
+  padding: 32px 64px;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  overflow-x: auto;
+}
+.musk-item { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.musk-rule { font-family: 'Inconsolata', monospace; font-size: 9px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; }
+.musk-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 700; color: var(--muted2); white-space: nowrap; }
+.musk-sep { width: 1px; height: 32px; background: var(--line2); flex-shrink: 0; }
+
+/* ── CTA ── */
+.cta-section {
+  padding: 140px 64px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+  border-top: 1px solid var(--line2);
+}
+.cta-section::before {
+  content: '';
+  position: absolute; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(200,168,75,.07) 0%, transparent 70%);
+  border-radius: 50%; top: 50%; left: 50%;
+  transform: translate(-50%, -50%); pointer-events: none;
+}
+.cta-free-tag {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--noir);
+  font-family: 'Inconsolata', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 6px 16px;
+  margin-bottom: 24px;
+}
+.cta-section h2 { max-width: 640px; margin: 0 auto 16px; }
+.cta-sub { font-size: 15px; color: var(--muted2); margin: 0 auto 12px; max-width: 420px; line-height: 1.6; }
+.cta-urgency {
+  font-family: 'Inconsolata', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin-bottom: 32px;
+}
+.cta-form { max-width: 440px; margin: 0 auto; }
 .cta-form .form-wrap { max-width: 100%; }
+.cta-note { font-family: 'Inconsolata', monospace; font-size: 10px; color: #555; margin-top: 10px; letter-spacing: .5px; }
 
 /* ── FOOTER ── */
 footer {
-  padding: 36px 64px;
-  border-top: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  padding: 32px 64px;
+  border-top: 1px solid var(--line2);
+  display: flex; align-items: center; justify-content: space-between;
 }
-.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--gold); }
-.footer-links { display: flex; gap: 28px; list-style: none; }
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--gold); }
+.footer-links { display: flex; gap: 24px; list-style: none; }
 .footer-links a { font-family: 'Inconsolata', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s; }
 .footer-links a:hover { color: var(--gold); }
-.footer-copy { font-family: 'Inconsolata', monospace; font-size: 10px; color: var(--muted); }
+.footer-copy { font-family: 'Inconsolata', monospace; font-size: 10px; color: #333; }
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-.fade-in { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
-.hero-left > * { animation: fadeUp .7s ease both; }
-.hero-left > *:nth-child(1) { animation-delay: .1s; }
-.hero-left > *:nth-child(2) { animation-delay: .25s; }
-.hero-left > *:nth-child(3) { animation-delay: .4s; }
-.hero-left > *:nth-child(4) { animation-delay: .55s; }
-.hero-left > *:nth-child(5) { animation-delay: .65s; }
-.hero-left > *:nth-child(6) { animation-delay: .75s; }
+/* ── SCROLL REVEALS ── */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
-  nav { padding: 16px 24px; }
-  .nav-right .nav-link { display: none; }
+  nav { padding: 14px 20px; }
+  .nav-link { display: none; }
   .hero { grid-template-columns: 1fr; }
   .hero-right { display: none; }
-  .hero-left { padding: 100px 24px 60px; }
-  section { padding: 72px 24px; }
-  .steps, .principles-grid, .roadmap { grid-template-columns: 1fr; }
-  .preview-layout { grid-template-columns: 1fr; }
+  .hero-left { padding: 80px 24px 60px; }
+  .what-section, .how-section { padding: 72px 24px; }
+  .three-points, .steps { grid-template-columns: 1fr; }
+  .musk-strip { padding: 24px; gap: 24px; }
   footer { flex-direction: column; gap: 20px; text-align: center; }
-  .stats { gap: 24px; flex-wrap: wrap; }
-  .cta-section { padding: 100px 24px; }
+  .cta-section { padding: 80px 24px; }
 }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.hero-left > * { animation: fadeUp .6s ease both; }
+.hero-left > *:nth-child(1){animation-delay:.1s}
+.hero-left > *:nth-child(2){animation-delay:.2s}
+.hero-left > *:nth-child(3){animation-delay:.35s}
+.hero-left > *:nth-child(4){animation-delay:.45s}
+.hero-left > *:nth-child(5){animation-delay:.55s}
+.hero-left > *:nth-child(6){animation-delay:.65s}
+.hero-left > *:nth-child(7){animation-delay:.72s}
 </style>
 </head>
 <body>
 
 <div class="cur" id="cur"></div>
-<div class="cur-ring" id="curRing"></div>
+<div class="cur-ring" id="ring"></div>
+
+<!-- FREE BANNER — first thing they see -->
+<div class="free-banner">⚡ 100% Free Knowledge · No Credit Card · No Paywall · Ever</div>
 
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="logo">Alphai</a>
   <div class="nav-right">
+    <a href="#what" class="nav-link">What you get</a>
     <a href="#how" class="nav-link">How it works</a>
-    <a href="#newsletter" class="nav-link">Newsletter</a>
-    <a href="#roadmap" class="nav-link">Roadmap</a>
-    <button class="nav-btn" onclick="document.getElementById('hero-email').focus()">Get Free Brief</button>
+    <button class="nav-cta" onclick="document.getElementById('hero-email').focus()">Get Free Brief</button>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ── HERO ── -->
 <section class="hero" id="top">
-  <div class="hero-left">
-    <div class="hero-kicker">Free Daily Intelligence</div>
-    <h1>Your AI <em>Edge</em><br>in European<br>Markets.</h1>
-    <p class="hero-sub">Every morning at <strong>7:00 AM CET</strong> — a personalized AI brief on your assets. Stocks, crypto, prediction markets. <strong>No code. No Bloomberg terminal required.</strong></p>
 
-    <!-- Mailchimp signup form -->
-    <form action="https://github.us11.list-manage.com/subscribe/post?u=445d56e260e3d1879e3e21e1b&amp;id=25d2ae4778&amp;f_id=005291e0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" class="form-wrap">
-      <input type="email" name="EMAIL" class="form-input" placeholder="your@email.com" required autocomplete="email">
-      <!-- Honeypot anti-spam -->
+  <!-- LEFT: headline + form -->
+  <div class="hero-left">
+
+    <div class="free-pill">
+      <div class="free-pill-dot"></div>
+      <span class="free-pill-text">Free daily knowledge — no strings attached</span>
+    </div>
+
+    <h1>The <em>smartest</em><br>5 minutes of<br>your morning.</h1>
+
+    <div class="value-points">
+      <div class="vp">
+        <span class="vp-num">01</span>
+        <span class="vp-text"><strong>Free market intelligence, every day at 7AM CET.</strong> AI-powered brief on European stocks, crypto & prediction markets. No Bloomberg terminal required.</span>
+      </div>
+      <div class="vp">
+        <span class="vp-num">02</span>
+        <span class="vp-text"><strong>Built on Musk's Algorithm.</strong> We delete everything that isn't essential. You get signal, not noise. 3 data points. 1 key insight. Done.</span>
+      </div>
+      <div class="vp">
+        <span class="vp-num">03</span>
+        <span class="vp-text"><strong>We're a startup. We ship fast.</strong> No corporate BS. If something breaks, we fix it same day. If you reply, a human reads it.</span>
+      </div>
+    </div>
+
+    <div class="urgency">Joining now = early access to Alphai Pro when it launches</div>
+
+    <form class="form-wrap" action="https://github.us11.list-manage.com/subscribe/post?u=445d56e260e3d1879e3e21e1b&amp;id=25d2ae4778&amp;f_id=005291e0f0" method="post" target="_blank">
+      <input type="email" id="hero-email" name="EMAIL" class="form-input" placeholder="your@email.com" required autocomplete="email">
       <div style="position:absolute;left:-5000px" aria-hidden="true">
         <input type="text" name="b_445d56e260e3d1879e3e21e1b_25d2ae4778" tabindex="-1" value="">
       </div>
-      <button type="submit" name="subscribe" class="form-submit">Join Free →</button>
+      <button type="submit" name="subscribe" class="form-submit">Get It Free →</button>
     </form>
-    <p class="form-note">Free forever · No credit card · Unsubscribe anytime</p>
+    <p class="form-note">Free forever · Unsubscribe in one click · No spam, ever</p>
 
-    <div class="stats">
-      <div>
-        <div class="stat-val">7:00</div>
-        <div class="stat-lbl">AM CET delivery</div>
+    <div class="social-proof-mini">
+      <div class="avatars">
+        <div class="av">A</div>
+        <div class="av">M</div>
+        <div class="av">L</div>
+        <div class="av">+</div>
       </div>
-      <div>
-        <div class="stat-val">3</div>
-        <div class="stat-lbl">Asset classes</div>
-      </div>
-      <div>
-        <div class="stat-val">EU</div>
-        <div class="stat-lbl">Focused market</div>
-      </div>
-      <div>
-        <div class="stat-val">AI</div>
-        <div class="stat-lbl">Powered engine</div>
-      </div>
+      <span class="sp-text">Be one of the <strong>first 500</strong> subscribers and shape the product</span>
     </div>
+
   </div>
 
+  <!-- RIGHT: email mockup -->
   <div class="hero-right">
-    <div class="scanline"></div>
-    <div class="terminal">
-      <div class="t-bar">
-        <div class="t-dot" style="background:#e53935"></div>
-        <div class="t-dot" style="background:#fb8c00"></div>
-        <div class="t-dot" style="background:#1db954"></div>
-        <span class="t-title">ALPHAI BRIEF — 01 APR 2026</span>
+    <div class="live-badge"><div class="live-dot"></div>Live data</div>
+    <div class="email-mockup">
+      <div class="em-bar">
+        <div class="em-dot" style="background:#ff5252"></div>
+        <div class="em-dot" style="background:#ffab40"></div>
+        <div class="em-dot" style="background:#00e676"></div>
+        <span class="em-title">Alphai Morning Brief — 07:00 CET</span>
       </div>
-      <div class="t-body">
-        <div class="t-date">// TUE 01 APR 2026 · 07:00 CET · EU EDITION</div>
-
-        <div class="t-row"><span class="t-sym">BTC/EUR</span><span class="t-price">€87,420</span><span class="t-chg up">▲ +2.4%</span></div>
-        <div class="t-row"><span class="t-sym">ETH/EUR</span><span class="t-price">€3,180</span><span class="t-chg up">▲ +1.2%</span></div>
-        <div class="t-row"><span class="t-sym">FTSE MIB</span><span class="t-price">36,842</span><span class="t-chg up">▲ +0.5%</span></div>
-        <div class="t-row"><span class="t-sym">DAX</span><span class="t-price">22,104</span><span class="t-chg dn">▼ -0.2%</span></div>
-        <div class="t-row"><span class="t-sym">BTP 10Y</span><span class="t-price">3.82%</span><span class="t-chg dn">▼ -0.04</span></div>
-        <div class="t-row"><span class="t-sym">EUR/USD</span><span class="t-price">1.0842</span><span class="t-chg up">▲ +0.1%</span></div>
-
-        <hr class="t-div">
-
-        <div class="t-row"><span class="t-sym" style="color:var(--gold)">POLYMARKET</span></div>
-        <div class="t-row"><span style="color:var(--muted2);font-size:11px">Fed cut Jun</span><span class="t-price">68%</span><span class="t-chg up">▲ +3pp</span></div>
-        <div class="t-row"><span style="color:var(--muted2);font-size:11px">ECB cut Apr</span><span class="t-price">41%</span><span class="t-chg dn">▼ -2pp</span></div>
-
-        <hr class="t-div">
-
-        <div class="t-macro">
-          <span style="color:var(--gold)">⚡ MACRO:</span> ECB meeting Thu. EUR/USD 1.08 key level.<br>
-          <span style="color:var(--gold)">📰 NEWS:</span> Unicredit Q1 beat estimates +12% YoY.<br>
-          <span style="color:var(--gold)">🔮 SIGNAL:</span> BTC ETF inflow record €1.2B yesterday.
+      <div class="em-body">
+        <div class="em-header">
+          <span class="em-logo">Alphai</span>
+          <span class="em-date">SUN 05 APR 2026 · #001</span>
         </div>
 
-        <hr class="t-div">
-        <div style="font-size:10px;color:var(--muted)">alphai.eu · educational analysis only<span class="t-cursor"></span></div>
+        <div class="em-tag">// Market snapshot</div>
+        <div class="em-grid">
+          <div class="em-cell"><div class="em-sym">BTC/EUR</div><div class="em-price">€87,420</div><div class="em-chg up">▲ +2.4%</div></div>
+          <div class="em-cell"><div class="em-sym">FTSE MIB</div><div class="em-price">36,842</div><div class="em-chg up">▲ +0.5%</div></div>
+          <div class="em-cell"><div class="em-sym">EUR/USD</div><div class="em-price">1.0842</div><div class="em-chg up">▲ +0.1%</div></div>
+          <div class="em-cell"><div class="em-sym">ETH/EUR</div><div class="em-price">€3,180</div><div class="em-chg up">▲ +1.2%</div></div>
+          <div class="em-cell"><div class="em-sym">DAX</div><div class="em-price">22,104</div><div class="em-chg dn">▼ -0.2%</div></div>
+          <div class="em-cell"><div class="em-sym">BTP 10Y</div><div class="em-price">3.82%</div><div class="em-chg dn">▼ -0.04</div></div>
+        </div>
+
+        <div class="em-signal">
+          <div class="em-signal-label">⚡ Today's signal</div>
+          <div class="em-signal-text"><strong>EUR/USD 1.08 support.</strong> If it breaks, watch EU equities. Fed minutes 20:00 CET — key event.</div>
+        </div>
+
+        <div class="em-tag">// Prediction markets</div>
+        <div class="em-pm">
+          <div class="em-pm-row"><span class="em-pm-event">Fed cut June</span><span class="em-pm-val up">68% ▲</span></div>
+          <div class="em-pm-row"><span class="em-pm-event">ECB cut April</span><span class="em-pm-val dn">41% ▼</span></div>
+          <div class="em-pm-row"><span class="em-pm-event">BTC &gt;€90K May</span><span class="em-pm-val up">54% ▲</span></div>
+        </div>
+
+        <div class="em-footer">
+          <span class="em-footer-logo">Alphai</span>
+          <span class="em-footer-note">Educational only · alphai.eu</span>
+        </div>
       </div>
     </div>
   </div>
+
 </section>
 
-<!-- TICKER -->
+<!-- LIVE TICKER -->
 <div class="ticker-strip">
   <div class="ticker-inner">
-    <div class="tick"><span class="tick-name">BTC/EUR</span>&nbsp;<span class="tick-val">€87,420</span>&nbsp;<span class="t-chg up">▲ +2.4%</span></div>
-    <div class="tick"><span class="tick-name">ETH/EUR</span>&nbsp;<span class="tick-val">€3,180</span>&nbsp;<span class="t-chg up">▲ +1.2%</span></div>
-    <div class="tick"><span class="tick-name">FTSE MIB</span>&nbsp;<span class="tick-val">36,842</span>&nbsp;<span class="t-chg up">▲ +0.5%</span></div>
-    <div class="tick"><span class="tick-name">DAX</span>&nbsp;<span class="tick-val">22,104</span>&nbsp;<span class="t-chg dn">▼ -0.2%</span></div>
-    <div class="tick"><span class="tick-name">BTP 10Y</span>&nbsp;<span class="tick-val">3.82%</span>&nbsp;<span class="t-chg dn">▼ -0.04</span></div>
-    <div class="tick"><span class="tick-name">EUR/USD</span>&nbsp;<span class="tick-val">1.0842</span>&nbsp;<span class="t-chg up">▲ +0.1%</span></div>
-    <div class="tick"><span class="tick-name">POLYMARKET</span>&nbsp;<span class="tick-val">68%</span>&nbsp;<span class="t-chg up">▲ +3pp</span></div>
-    <div class="tick"><span class="tick-name">SOL/EUR</span>&nbsp;<span class="tick-val">€142.4</span>&nbsp;<span class="t-chg up">▲ +4.1%</span></div>
-    <div class="tick"><span class="tick-name">CAC 40</span>&nbsp;<span class="tick-val">8,240</span>&nbsp;<span class="t-chg up">▲ +0.3%</span></div>
-    <!-- duplicate for loop -->
-    <div class="tick"><span class="tick-name">BTC/EUR</span>&nbsp;<span class="tick-val">€87,420</span>&nbsp;<span class="t-chg up">▲ +2.4%</span></div>
-    <div class="tick"><span class="tick-name">ETH/EUR</span>&nbsp;<span class="tick-val">€3,180</span>&nbsp;<span class="t-chg up">▲ +1.2%</span></div>
-    <div class="tick"><span class="tick-name">FTSE MIB</span>&nbsp;<span class="tick-val">36,842</span>&nbsp;<span class="t-chg up">▲ +0.5%</span></div>
-    <div class="tick"><span class="tick-name">DAX</span>&nbsp;<span class="tick-val">22,104</span>&nbsp;<span class="t-chg dn">▼ -0.2%</span></div>
-    <div class="tick"><span class="tick-name">BTP 10Y</span>&nbsp;<span class="tick-val">3.82%</span>&nbsp;<span class="t-chg up">▲ -0.04</span></div>
-    <div class="tick"><span class="tick-name">EUR/USD</span>&nbsp;<span class="tick-val">1.0842</span>&nbsp;<span class="t-chg up">▲ +0.1%</span></div>
-    <div class="tick"><span class="tick-name">POLYMARKET</span>&nbsp;<span class="tick-val">68%</span>&nbsp;<span class="t-chg up">▲ +3pp</span></div>
-    <div class="tick"><span class="tick-name">SOL/EUR</span>&nbsp;<span class="tick-val">€142.4</span>&nbsp;<span class="t-chg up">▲ +4.1%</span></div>
-    <div class="tick"><span class="tick-name">CAC 40</span>&nbsp;<span class="tick-val">8,240</span>&nbsp;<span class="t-chg up">▲ +0.3%</span></div>
+    <div class="tick"><span class="tick-name">BTC/EUR</span>&nbsp;<span class="tick-val">€87,420</span>&nbsp;<span class="up">▲ +2.4%</span></div>
+    <div class="tick"><span class="tick-name">ETH/EUR</span>&nbsp;<span class="tick-val">€3,180</span>&nbsp;<span class="up">▲ +1.2%</span></div>
+    <div class="tick"><span class="tick-name">FTSE MIB</span>&nbsp;<span class="tick-val">36,842</span>&nbsp;<span class="up">▲ +0.5%</span></div>
+    <div class="tick"><span class="tick-name">DAX</span>&nbsp;<span class="tick-val">22,104</span>&nbsp;<span class="dn">▼ -0.2%</span></div>
+    <div class="tick"><span class="tick-name">BTP 10Y</span>&nbsp;<span class="tick-val">3.82%</span>&nbsp;<span class="dn">▼ -0.04</span></div>
+    <div class="tick"><span class="tick-name">EUR/USD</span>&nbsp;<span class="tick-val">1.0842</span>&nbsp;<span class="up">▲ +0.1%</span></div>
+    <div class="tick"><span class="tick-name">POLYMARKET</span>&nbsp;<span class="tick-val">68%</span>&nbsp;<span class="up">▲ +3pp</span></div>
+    <div class="tick"><span class="tick-name">SOL/EUR</span>&nbsp;<span class="tick-val">€142.4</span>&nbsp;<span class="up">▲ +4.1%</span></div>
+    <!-- dupe for loop -->
+    <div class="tick"><span class="tick-name">BTC/EUR</span>&nbsp;<span class="tick-val">€87,420</span>&nbsp;<span class="up">▲ +2.4%</span></div>
+    <div class="tick"><span class="tick-name">ETH/EUR</span>&nbsp;<span class="tick-val">€3,180</span>&nbsp;<span class="up">▲ +1.2%</span></div>
+    <div class="tick"><span class="tick-name">FTSE MIB</span>&nbsp;<span class="tick-val">36,842</span>&nbsp;<span class="up">▲ +0.5%</span></div>
+    <div class="tick"><span class="tick-name">DAX</span>&nbsp;<span class="tick-val">22,104</span>&nbsp;<span class="dn">▼ -0.2%</span></div>
+    <div class="tick"><span class="tick-name">BTP 10Y</span>&nbsp;<span class="tick-val">3.82%</span>&nbsp;<span class="dn">▼ -0.04</span></div>
+    <div class="tick"><span class="tick-name">EUR/USD</span>&nbsp;<span class="tick-val">1.0842</span>&nbsp;<span class="up">▲ +0.1%</span></div>
+    <div class="tick"><span class="tick-name">POLYMARKET</span>&nbsp;<span class="tick-val">68%</span>&nbsp;<span class="up">▲ +3pp</span></div>
+    <div class="tick"><span class="tick-name">SOL/EUR</span>&nbsp;<span class="tick-val">€142.4</span>&nbsp;<span class="up">▲ +4.1%</span></div>
   </div>
 </div>
 
-<!-- HOW IT WORKS -->
+<!-- ── WHAT YOU GET — MAX 3 POINTS ── -->
+<section class="what-section" id="what">
+  <div class="section-eyebrow">What you get every morning</div>
+  <h2>Free knowledge.<br><em>Zero friction.</em></h2>
+  <p class="sec-sub">Three things. That's it. Musk Algorithm applied — we deleted everything else.</p>
+
+  <div class="three-points">
+    <div class="point-card reveal">
+      <div class="point-icon">📊</div>
+      <div class="point-title">Live market data</div>
+      <div class="point-desc">EU indices, BTC/EUR, BTP yields, EUR/USD. Data that actually matters for European traders — not US-centric noise.</div>
+      <div class="point-tag">Every morning</div>
+    </div>
+    <div class="point-card reveal">
+      <div class="point-icon">⚡</div>
+      <div class="point-title">One signal to watch</div>
+      <div class="point-desc">We run the algorithm so you don't have to. One key insight per day — the thing that will actually move your morning.</div>
+      <div class="point-tag">AI-powered</div>
+    </div>
+    <div class="point-card reveal">
+      <div class="point-icon">🔮</div>
+      <div class="point-title">Prediction market edge</div>
+      <div class="point-desc">Polymarket & Kalshi probabilities on macro events. What the smart money is actually pricing in — before it hits the news.</div>
+      <div class="point-tag">Unique in EU</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
 <section class="how-section" id="how">
-  <div class="sec-label">How it works</div>
-  <h2>Three steps.<br><em>One brief.</em></h2>
-  <p class="sec-sub">Musk Algorithm applied: question every requirement, delete what's not essential, automate the rest.</p>
+  <div class="section-eyebrow">How it works</div>
+  <h2>Three steps.<br><em>One email.</em></h2>
 
   <div class="steps">
-    <div class="step fade-in">
+    <div class="step reveal">
       <div class="step-num">01</div>
       <div class="step-title">You subscribe</div>
-      <div class="step-desc">Enter your email. Tell us which assets you watch — BTC, ETF EU, BTP, prediction markets. Takes 30 seconds.</div>
-      <div class="step-tag">Free forever</div>
+      <div class="step-desc">Enter your email. 10 seconds. No forms, no onboarding, no preferences to set. Just your email.</div>
     </div>
-    <div class="step fade-in">
+    <div class="step reveal">
       <div class="step-num">02</div>
       <div class="step-title">AI builds your brief</div>
-      <div class="step-desc">Every night at 3 AM, our AI engine pulls market data, news, and prediction market signals. Synthesizes everything into your personal brief.</div>
-      <div class="step-tag">Claude AI powered</div>
+      <div class="step-desc">Every night, our AI pulls market data across EU indices, crypto and prediction markets. Synthesizes it into one sharp brief.</div>
     </div>
-    <div class="step fade-in">
+    <div class="step reveal">
       <div class="step-num">03</div>
-      <div class="step-title">You wake up sharp</div>
-      <div class="step-desc">7:00 AM CET. Your brief is in your inbox. 5 minutes. You know exactly what moved, why it moved, and what to watch today.</div>
-      <div class="step-tag">5 min read</div>
+      <div class="step-title">Wake up sharp</div>
+      <div class="step-desc">7:00 AM CET. Your brief is in your inbox. Read it in 5 minutes. Start the day with an edge.</div>
     </div>
   </div>
 </section>
 
-<!-- NEWSLETTER PREVIEW -->
-<section id="newsletter">
-  <div class="sec-label">The Brief</div>
-  <h2>What you get<br>every <em>morning.</em></h2>
-
-  <div class="preview-layout">
-    <div class="preview-text fade-in">
-      <h3>Educational market analysis, not investment advice.</h3>
-      <p>Every brief covers the three asset classes that matter for European traders — without the regulatory grey area of financial advice.</p>
-      <div class="feature-li">Price action on EU indices, BTP, major ETFs</div>
-      <div class="feature-li">Crypto sentiment with EUR-denominated data</div>
-      <div class="feature-li">Prediction market probabilities (Polymarket, Kalshi)</div>
-      <div class="feature-li">Macro events impacting your positions</div>
-      <div class="feature-li">One key signal to watch during the day</div>
-      <div style="margin-top:32px;padding:16px 20px;border:1px solid var(--line2);border-left:2px solid var(--gold)">
-        <div style="font-family:'Inconsolata',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:6px">LEGAL NOTE</div>
-        <p style="font-size:12px;color:var(--muted2);line-height:1.6">Alphai provides educational market analysis. Not investment advice. We aggregate public data and AI-generated summaries — no personalised recommendations.</p>
-      </div>
-    </div>
-
-    <div class="nl-mock fade-in">
-      <div class="nl-head">
-        <span class="nl-logo-sm">Alphai</span>
-        <span class="nl-date-sm">TUE 01 APR 2026 · 07:00 CET</span>
-      </div>
-      <div class="nl-body">
-        <div class="nl-tag">Markets</div>
-        <div class="nl-headline">ECB holds, BTC at €87K, MIB leads EU indices</div>
-        <div class="nl-text">European equities opened mixed with Italy outperforming. BTC continued its run fuelled by record ETF inflows. ECB left rates unchanged — market reaction muted.</div>
-
-        <div class="nl-ticker-row"><span class="nl-sym">BTC/EUR</span><span>€87,420</span><span class="nl-chg up">▲ +2.4%</span></div>
-        <div class="nl-ticker-row"><span class="nl-sym">FTSE MIB</span><span>36,842</span><span class="nl-chg up">▲ +0.5%</span></div>
-        <div class="nl-ticker-row"><span class="nl-sym">BTP 10Y</span><span>3.82%</span><span class="nl-chg dn">▼ -0.04</span></div>
-        <div class="nl-ticker-row"><span class="nl-sym">EUR/USD</span><span>1.0842</span><span class="nl-chg up">▲ +0.1%</span></div>
-
-        <div class="nl-macro-box">
-          <span style="color:var(--gold)">Today's signal →</span> Watch EUR/USD 1.08 support. If it breaks, expect pressure on EU assets. Fed minutes at 20:00 CET.
-        </div>
-
-        <div style="margin-top:14px;font-family:'Inconsolata',monospace;font-size:9px;color:var(--muted)">Educational analysis · alphai.eu</div>
-      </div>
+<!-- ── MUSK ALGORITHM STRIP ── -->
+<div class="musk-strip">
+  <div class="musk-item">
+    <div>
+      <div class="musk-rule">Rule 01</div>
+      <div class="musk-text">Delete what's not essential</div>
     </div>
   </div>
-</section>
-
-<!-- PRINCIPLES BANNER -->
-<section class="principles-section fade-in">
-  <div class="sec-label">Built on</div>
-  <h2>Musk's Algorithm.<br><em>Applied.</em></h2>
-  <div class="principles-grid">
-    <div class="principle-cell">
-      <div class="p-num">RULE 01</div>
-      <div class="p-title">Question every requirement</div>
-      <div class="p-desc">One product. One CTA. One email. Everything else deleted until validated.</div>
-    </div>
-    <div class="principle-cell">
-      <div class="p-num">RULE 04</div>
-      <div class="p-title">If a timeline is long, it's wrong</div>
-      <div class="p-desc">2-week sprints. Ship, measure, iterate. No 6-month roadmaps without feedback.</div>
-    </div>
-    <div class="principle-cell">
-      <div class="p-num">RULE 06</div>
-      <div class="p-title">Leader on the front lines</div>
-      <div class="p-desc">The founder reads every reply. Rewrites the prompt if the brief isn't sharp.</div>
-    </div>
-    <div class="principle-cell">
-      <div class="p-num">RULE 09</div>
-      <div class="p-title">Design and production together</div>
-      <div class="p-desc">Feedback from readers updates the AI prompt within 24 hours. No handoffs.</div>
+  <div class="musk-sep"></div>
+  <div class="musk-item">
+    <div>
+      <div class="musk-rule">Rule 04</div>
+      <div class="musk-text">If a timeline is long, it's wrong</div>
     </div>
   </div>
-</section>
-
-<!-- ROADMAP -->
-<section id="roadmap">
-  <div class="sec-label">Roadmap</div>
-  <h2>12 months.<br><em>No fluff.</em></h2>
-  <p class="sec-sub">Musk rule: delete everything that isn't essential until proven otherwise.</p>
-
-  <div class="roadmap">
-    <div class="rm-cell fade-in">
-      <div class="rm-phase">Phase 1 — Now</div>
-      <div class="rm-period">Weeks 1–6</div>
-      <div class="rm-item active">Launch newsletter</div>
-      <div class="rm-item active">500 subscribers</div>
-      <div class="rm-item active">First sponsor</div>
-      <div class="rm-item">Daily AI brief live</div>
-      <div class="rm-kpi">Target: 500 subs</div>
-    </div>
-    <div class="rm-cell fade-in">
-      <div class="rm-phase">Phase 2</div>
-      <div class="rm-period">Months 2–4</div>
-      <div class="rm-item">2,000 subscribers</div>
-      <div class="rm-item">Open rate &gt;40%</div>
-      <div class="rm-item">Beta: Pro tier</div>
-      <div class="rm-item">Sponsor €200-500/mo</div>
-      <div class="rm-kpi">Target: €500 MRR</div>
-    </div>
-    <div class="rm-cell fade-in">
-      <div class="rm-phase">Phase 3</div>
-      <div class="rm-period">Months 5–8</div>
-      <div class="rm-item">5,000 subscribers</div>
-      <div class="rm-item">300 paid users</div>
-      <div class="rm-item">Backtest MVP — if validated</div>
-      <div class="rm-item">Break-even</div>
-      <div class="rm-kpi">Target: €2,500 MRR</div>
-    </div>
-    <div class="rm-cell fade-in">
-      <div class="rm-phase">Phase 4</div>
-      <div class="rm-period">Months 9–12</div>
-      <div class="rm-item">10,000 subscribers</div>
-      <div class="rm-item">€4,500+ MRR</div>
-      <div class="rm-item">Pre-seed if traction</div>
-      <div class="rm-item">EU expansion</div>
-      <div class="rm-kpi">Target: €5,000 MRR</div>
+  <div class="musk-sep"></div>
+  <div class="musk-item">
+    <div>
+      <div class="musk-rule">Rule 06</div>
+      <div class="musk-text">Leader on the front lines</div>
     </div>
   </div>
-</section>
+  <div class="musk-sep"></div>
+  <div class="musk-item">
+    <div>
+      <div class="musk-rule">Applied to Alphai</div>
+      <div class="musk-text">3 data points. 1 signal. 1 email. Free.</div>
+    </div>
+  </div>
+</div>
 
-<!-- CTA -->
+<!-- ── CTA ── -->
 <section class="cta-section">
-  <div class="sec-label" style="justify-content:center">Free newsletter</div>
-  <h2>Get your edge.<br><em>Tomorrow morning.</em></h2>
-  <p class="sec-sub">Your first AI brief lands at 7:00 AM CET the day we launch. Free. Always.</p>
+  <div class="cta-free-tag">100% Free — Always</div>
+  <h2>Start tomorrow.<br><em>7AM in your inbox.</em></h2>
+  <p class="cta-sub">Join the waitlist now. First subscribers get early access to every new feature we ship.</p>
+  <div class="cta-urgency">⚡ We're in early access — spots are limited at launch</div>
   <div class="cta-form">
-    <form action="https://github.us11.list-manage.com/subscribe/post?u=445d56e260e3d1879e3e21e1b&amp;id=25d2ae4778&amp;f_id=005291e0f0" method="post" target="_blank" class="form-wrap" style="max-width:100%">
+    <form class="form-wrap" action="https://github.us11.list-manage.com/subscribe/post?u=445d56e260e3d1879e3e21e1b&amp;id=25d2ae4778&amp;f_id=005291e0f0" method="post" target="_blank" style="max-width:100%">
       <input type="email" name="EMAIL" class="form-input" placeholder="your@email.com" required autocomplete="email">
       <div style="position:absolute;left:-5000px" aria-hidden="true">
         <input type="text" name="b_445d56e260e3d1879e3e21e1b_25d2ae4778" tabindex="-1" value="">
       </div>
       <button type="submit" name="subscribe" class="form-submit">Join Free →</button>
     </form>
-    <p class="form-note" style="text-align:center;margin-top:10px">Free forever · No credit card · Unsubscribe anytime</p>
+    <p class="cta-note">Free forever · Unsubscribe anytime · No credit card</p>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ── FOOTER ── -->
 <footer>
   <div class="footer-logo">Alphai</div>
   <ul class="footer-links">
     <li><a href="#">Privacy</a></li>
     <li><a href="#">Terms</a></li>
-    <li><a href="https://twitter.com" target="_blank">X/Twitter</a></li>
+    <li><a href="https://x.com" target="_blank">X/Twitter</a></li>
     <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
   </ul>
   <div class="footer-copy">© 2026 Alphai · alphai.eu · Educational analysis only</div>
@@ -714,43 +702,32 @@ footer {
 <script>
 // Cursor
 const cur = document.getElementById('cur');
-const ring = document.getElementById('curRing');
-let mx=0, my=0, rx=0, ry=0;
+const ring = document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cur.style.left = mx+'px'; cur.style.top = my+'px';
+  mx=e.clientX; my=e.clientY;
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
 });
-(function animRing() {
-  rx += (mx-rx)*.1; ry += (my-ry)*.1;
-  ring.style.left = rx+'px'; ring.style.top = ry+'px';
-  requestAnimationFrame(animRing);
+(function loop(){
+  rx+=(mx-rx)*.1; ry+=(my-ry)*.1;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(loop);
 })();
-document.querySelectorAll('a,button,input').forEach(el => {
-  el.addEventListener('mouseenter', () => { ring.style.width='44px'; ring.style.height='44px'; });
-  el.addEventListener('mouseleave', () => { ring.style.width='28px'; ring.style.height='28px'; });
+document.querySelectorAll('a,button,input').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='44px';ring.style.height='44px';});
+  el.addEventListener('mouseleave',()=>{ring.style.width='28px';ring.style.height='28px';});
 });
 
 // Nav
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('stuck', scrollY > 50);
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('stuck', scrollY>40);
 });
 
-// Scroll reveal
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
-
-// Form
-function handleSub(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('button');
-  const inp = e.target.querySelector('input');
-  btn.textContent = '✓ You\'re in';
-  btn.style.background = '#1db954';
-  inp.value = '';
-  inp.placeholder = 'See you at 7:00 AM CET ↗';
-}
+// Reveal
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
