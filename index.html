@@ -7,6 +7,7 @@
 <title>Alphai — Free Daily Market Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Inconsolata:wght@300;400;500;600&family=Hind:wght@400;500&display=swap" rel="stylesheet">
+<script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="90aebe7a-b827-4bf3-932c-fda3d548bf45"></script>
 <style>
 :root {
   --noir: #000000;
@@ -59,7 +60,7 @@ nav.stuck { background: rgba(0,0,0,.95); backdrop-filter: blur(20px); border-col
 }
 .nav-cta:hover { background: var(--gold2); transform: translateY(-1px); }
 
-/* ── FREE BADGE — top of page ── */
+/* ── FREE BADGE ── */
 .free-banner {
   background: var(--gold);
   color: var(--noir);
@@ -74,15 +75,14 @@ nav.stuck { background: rgba(0,0,0,.95); backdrop-filter: blur(20px); border-col
   z-index: 100;
 }
 
-/* ── HERO — left: form, right: mockup ── */
+/* ── HERO ── */
 .hero {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding-top: 52px; /* nav height */
+  padding-top: 52px;
 }
 
-/* LEFT PANEL */
 .hero-left {
   display: flex;
   flex-direction: column;
@@ -116,7 +116,6 @@ h1 {
 }
 h1 em { font-style: italic; color: var(--gold); }
 
-/* 3 VALUE POINTS — max 3, highlighted */
 .value-points {
   display: flex;
   flex-direction: column;
@@ -135,7 +134,6 @@ h1 em { font-style: italic; color: var(--gold); }
 .vp-text { font-size: 14px; color: var(--muted2); line-height: 1.6; }
 .vp-text strong { color: var(--text); }
 
-/* URGENCY LINE */
 .urgency {
   font-family: 'Inconsolata', monospace;
   font-size: 11px;
@@ -171,9 +169,9 @@ h1 em { font-style: italic; color: var(--gold); }
   transition: background .2s;
 }
 .form-submit:hover { background: var(--gold2); }
+.form-submit:disabled { opacity: .6; cursor: default; }
 .form-note { font-family: 'Inconsolata', monospace; font-size: 10px; color: #555; letter-spacing: .5px; }
 
-/* SOCIAL PROOF MINI */
 .social-proof-mini {
   display: flex;
   align-items: center;
@@ -187,7 +185,6 @@ h1 em { font-style: italic; color: var(--gold); }
 .sp-text { font-family: 'Inconsolata', monospace; font-size: 10px; color: var(--muted); letter-spacing: .5px; margin-left: 12px; }
 .sp-text strong { color: var(--gold); }
 
-/* RIGHT PANEL — email mockup */
 .hero-right {
   background: var(--ink);
   display: flex;
@@ -197,8 +194,6 @@ h1 em { font-style: italic; color: var(--gold); }
   position: relative;
   overflow: hidden;
 }
-
-/* Grid lines background */
 .hero-right::before {
   content: '';
   position: absolute; inset: 0;
@@ -209,7 +204,6 @@ h1 em { font-style: italic; color: var(--gold); }
   pointer-events: none;
 }
 
-/* LIVE DATA TICKER inside hero right */
 .live-badge {
   position: absolute;
   top: 20px; left: 20px;
@@ -249,7 +243,6 @@ h1 em { font-style: italic; color: var(--gold); }
 .em-date { font-family: 'Inconsolata', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; }
 .em-tag { font-family: 'Inconsolata', monospace; font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
 
-/* Live market grid */
 .em-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--line2); border: 1px solid var(--line2); margin-bottom: 14px; }
 .em-cell { background: #0a0a0a; padding: 8px 10px; }
 .em-sym { font-family: 'Inconsolata', monospace; font-size: 8px; color: var(--muted); letter-spacing: 1px; margin-bottom: 2px; }
@@ -278,7 +271,7 @@ h1 em { font-style: italic; color: var(--gold); }
 .em-footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 700; color: var(--gold); }
 .em-footer-note { font-family: 'Inconsolata', monospace; font-size: 8px; color: #444; }
 
-/* ── LIVE TICKER STRIP ── */
+/* ── TICKER STRIP ── */
 .ticker-strip {
   background: var(--card); border-top: 1px solid var(--line2); border-bottom: 1px solid var(--line2);
   padding: 10px 0; overflow: hidden; white-space: nowrap;
@@ -310,7 +303,6 @@ h2 {
 h2 em { font-style: italic; color: var(--gold); }
 .sec-sub { font-size: 15px; color: var(--muted2); max-width: 500px; line-height: 1.7; margin-bottom: 56px; }
 
-/* 3 POINTS ONLY — Musk Algorithm */
 .three-points {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -338,7 +330,7 @@ h2 em { font-style: italic; color: var(--gold); }
 .point-desc { font-size: 13px; color: var(--muted2); line-height: 1.7; }
 .point-tag { display: inline-block; font-family: 'Inconsolata', monospace; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(200,168,75,.3); padding: 3px 8px; margin-top: 14px; }
 
-/* ── HOW IT WORKS — 3 steps only ── */
+/* ── HOW IT WORKS ── */
 .how-section { padding: 100px 64px; }
 .steps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; margin-top: 56px; }
 .step { padding: 32px 0; border-top: 1px solid var(--line2); }
@@ -451,10 +443,8 @@ footer {
 <div class="cur" id="cur"></div>
 <div class="cur-ring" id="ring"></div>
 
-<!-- FREE BANNER — first thing they see -->
 <div class="free-banner">⚡ 100% Free Knowledge · No Credit Card · No Paywall · Ever</div>
 
-<!-- NAV -->
 <nav id="nav">
   <a href="#" class="logo">Alphai</a>
   <div class="nav-right">
@@ -464,23 +454,17 @@ footer {
   </div>
 </nav>
 
-<!-- ── HERO ── -->
 <section class="hero" id="top">
-
-  <!-- LEFT: headline + form -->
   <div class="hero-left">
-
     <div class="free-pill">
       <div class="free-pill-dot"></div>
       <span class="free-pill-text">Free daily knowledge — no strings attached</span>
     </div>
-
     <h1>The <em>smartest</em><br>5 minutes of<br>your morning.</h1>
-
     <div class="value-points">
       <div class="vp">
         <span class="vp-num">01</span>
-        <span class="vp-text"><strong>Free market intelligence, every day at 7AM CET.</strong> AI-powered brief on European stocks, crypto & prediction markets. No Bloomberg terminal required.</span>
+        <span class="vp-text"><strong>Free market intelligence, every day at 7AM CET.</strong> AI-powered brief on European stocks, crypto &amp; prediction markets. No Bloomberg terminal required.</span>
       </div>
       <div class="vp">
         <span class="vp-num">02</span>
@@ -491,18 +475,12 @@ footer {
         <span class="vp-text"><strong>We're a startup. We ship fast.</strong> No corporate BS. If something breaks, we fix it same day. If you reply, a human reads it.</span>
       </div>
     </div>
-
     <div class="urgency">Joining now = early access to Alphai Pro when it launches</div>
-
-    <form class="form-wrap" action="https://github.us11.list-manage.com/subscribe/post?u=445d56e260e3d1879e3e21e1b&amp;id=25d2ae4778&amp;f_id=005291e0f0" method="post" target="_blank">
-      <input type="email" id="hero-email" name="EMAIL" class="form-input" placeholder="your@email.com" required autocomplete="email">
-      <div style="position:absolute;left:-5000px" aria-hidden="true">
-        <input type="text" name="b_445d56e260e3d1879e3e21e1b_25d2ae4778" tabindex="-1" value="">
-      </div>
-      <button type="submit" name="subscribe" class="form-submit">Get It Free →</button>
+    <form class="form-wrap" data-beehiiv-form="90aebe7a-b827-4bf3-932c-fda3d548bf45">
+      <input type="email" id="hero-email" name="email" class="form-input" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" class="form-submit">Get It Free →</button>
     </form>
     <p class="form-note">Free forever · Unsubscribe in one click · No spam, ever</p>
-
     <div class="social-proof-mini">
       <div class="avatars">
         <div class="av">A</div>
@@ -512,10 +490,8 @@ footer {
       </div>
       <span class="sp-text">Be one of the <strong>first 500</strong> subscribers and shape the product</span>
     </div>
-
   </div>
 
-  <!-- RIGHT: email mockup -->
   <div class="hero-right">
     <div class="live-badge"><div class="live-dot"></div>Live data</div>
     <div class="email-mockup">
@@ -530,7 +506,6 @@ footer {
           <span class="em-logo">Alphai</span>
           <span class="em-date">SUN 05 APR 2026 · #001</span>
         </div>
-
         <div class="em-tag">// Market snapshot</div>
         <div class="em-grid">
           <div class="em-cell"><div class="em-sym">BTC/EUR</div><div class="em-price">€87,420</div><div class="em-chg up">▲ +2.4%</div></div>
@@ -540,19 +515,16 @@ footer {
           <div class="em-cell"><div class="em-sym">DAX</div><div class="em-price">22,104</div><div class="em-chg dn">▼ -0.2%</div></div>
           <div class="em-cell"><div class="em-sym">BTP 10Y</div><div class="em-price">3.82%</div><div class="em-chg dn">▼ -0.04</div></div>
         </div>
-
         <div class="em-signal">
           <div class="em-signal-label">⚡ Today's signal</div>
           <div class="em-signal-text"><strong>EUR/USD 1.08 support.</strong> If it breaks, watch EU equities. Fed minutes 20:00 CET — key event.</div>
         </div>
-
         <div class="em-tag">// Prediction markets</div>
         <div class="em-pm">
           <div class="em-pm-row"><span class="em-pm-event">Fed cut June</span><span class="em-pm-val up">68% ▲</span></div>
           <div class="em-pm-row"><span class="em-pm-event">ECB cut April</span><span class="em-pm-val dn">41% ▼</span></div>
           <div class="em-pm-row"><span class="em-pm-event">BTC &gt;€90K May</span><span class="em-pm-val up">54% ▲</span></div>
         </div>
-
         <div class="em-footer">
           <span class="em-footer-logo">Alphai</span>
           <span class="em-footer-note">Educational only · alphai.eu</span>
@@ -560,10 +532,8 @@ footer {
       </div>
     </div>
   </div>
-
 </section>
 
-<!-- LIVE TICKER -->
 <div class="ticker-strip">
   <div class="ticker-inner">
     <div class="tick"><span class="tick-name">BTC/EUR</span>&nbsp;<span class="tick-val">€87,420</span>&nbsp;<span class="up">▲ +2.4%</span></div>
@@ -574,7 +544,6 @@ footer {
     <div class="tick"><span class="tick-name">EUR/USD</span>&nbsp;<span class="tick-val">1.0842</span>&nbsp;<span class="up">▲ +0.1%</span></div>
     <div class="tick"><span class="tick-name">POLYMARKET</span>&nbsp;<span class="tick-val">68%</span>&nbsp;<span class="up">▲ +3pp</span></div>
     <div class="tick"><span class="tick-name">SOL/EUR</span>&nbsp;<span class="tick-val">€142.4</span>&nbsp;<span class="up">▲ +4.1%</span></div>
-    <!-- dupe for loop -->
     <div class="tick"><span class="tick-name">BTC/EUR</span>&nbsp;<span class="tick-val">€87,420</span>&nbsp;<span class="up">▲ +2.4%</span></div>
     <div class="tick"><span class="tick-name">ETH/EUR</span>&nbsp;<span class="tick-val">€3,180</span>&nbsp;<span class="up">▲ +1.2%</span></div>
     <div class="tick"><span class="tick-name">FTSE MIB</span>&nbsp;<span class="tick-val">36,842</span>&nbsp;<span class="up">▲ +0.5%</span></div>
@@ -586,12 +555,10 @@ footer {
   </div>
 </div>
 
-<!-- ── WHAT YOU GET — MAX 3 POINTS ── -->
 <section class="what-section" id="what">
   <div class="section-eyebrow">What you get every morning</div>
   <h2>Free knowledge.<br><em>Zero friction.</em></h2>
   <p class="sec-sub">Three things. That's it. Musk Algorithm applied — we deleted everything else.</p>
-
   <div class="three-points">
     <div class="point-card reveal">
       <div class="point-icon">📊</div>
@@ -608,17 +575,15 @@ footer {
     <div class="point-card reveal">
       <div class="point-icon">🔮</div>
       <div class="point-title">Prediction market edge</div>
-      <div class="point-desc">Polymarket & Kalshi probabilities on macro events. What the smart money is actually pricing in — before it hits the news.</div>
+      <div class="point-desc">Polymarket &amp; Kalshi probabilities on macro events. What the smart money is actually pricing in — before it hits the news.</div>
       <div class="point-tag">Unique in EU</div>
     </div>
   </div>
 </section>
 
-<!-- ── HOW IT WORKS ── -->
 <section class="how-section" id="how">
   <div class="section-eyebrow">How it works</div>
   <h2>Three steps.<br><em>One email.</em></h2>
-
   <div class="steps">
     <div class="step reveal">
       <div class="step-num">01</div>
@@ -638,7 +603,6 @@ footer {
   </div>
 </section>
 
-<!-- ── MUSK ALGORITHM STRIP ── -->
 <div class="musk-strip">
   <div class="musk-item">
     <div>
@@ -669,25 +633,20 @@ footer {
   </div>
 </div>
 
-<!-- ── CTA ── -->
 <section class="cta-section">
   <div class="cta-free-tag">100% Free — Always</div>
   <h2>Start tomorrow.<br><em>7AM in your inbox.</em></h2>
   <p class="cta-sub">Join the waitlist now. First subscribers get early access to every new feature we ship.</p>
   <div class="cta-urgency">⚡ We're in early access — spots are limited at launch</div>
   <div class="cta-form">
-    <form class="form-wrap" action="https://github.us11.list-manage.com/subscribe/post?u=445d56e260e3d1879e3e21e1b&amp;id=25d2ae4778&amp;f_id=005291e0f0" method="post" target="_blank" style="max-width:100%">
-      <input type="email" name="EMAIL" class="form-input" placeholder="your@email.com" required autocomplete="email">
-      <div style="position:absolute;left:-5000px" aria-hidden="true">
-        <input type="text" name="b_445d56e260e3d1879e3e21e1b_25d2ae4778" tabindex="-1" value="">
-      </div>
-      <button type="submit" name="subscribe" class="form-submit">Join Free →</button>
+    <form class="form-wrap" data-beehiiv-form="90aebe7a-b827-4bf3-932c-fda3d548bf45" style="max-width:100%">
+      <input type="email" id="cta-email" name="email" class="form-input" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" class="form-submit">Join Free →</button>
     </form>
     <p class="cta-note">Free forever · Unsubscribe anytime · No credit card</p>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
 <footer>
   <div class="footer-logo">Alphai</div>
   <ul class="footer-links">
@@ -700,7 +659,6 @@ footer {
 </footer>
 
 <script>
-// Cursor
 const cur = document.getElementById('cur');
 const ring = document.getElementById('ring');
 let mx=0,my=0,rx=0,ry=0;
@@ -714,20 +672,17 @@ document.addEventListener('mousemove', e => {
   requestAnimationFrame(loop);
 })();
 document.querySelectorAll('a,button,input').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ring.style.width='44px';ring.style.height='44px';});
-  el.addEventListener('mouseleave',()=>{ring.style.width='28px';ring.style.height='28px';});
+  el.addEventListener('mouseenter',()=>{ ring.style.width='44px'; ring.style.height='44px'; });
+  el.addEventListener('mouseleave',()=>{ ring.style.width='28px'; ring.style.height='28px'; });
 });
-
-// Nav
 window.addEventListener('scroll',()=>{
   document.getElementById('nav').classList.toggle('stuck', scrollY>40);
 });
-
-// Reveal
 const obs = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }});
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
+<script type="text/javascript" async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
 </body>
 </html>
