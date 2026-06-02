@@ -3,686 +3,1398 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Alphai — Free daily AI market intelligence for European traders. No signup fee. No BS.">
-<title>Alphai — Free Daily Market Intelligence</title>
+<meta name="description" content="Alphai — The Morning Brief for European markets. A free, bilingual daily read on EU equities, MiCA crypto and prediction markets. Plus Alphai Pro: concierge backtesting in plain English.">
+<meta property="og:title" content="Alphai — AI Edge in European Markets">
+<meta property="og:description" content="Europe's market edge, in your inbox by 7am. Free, bilingual, built for European traders.">
+<meta property="og:url" content="https://alphai.eu">
+<title>Alphai — The Morning Brief for European Markets</title>
+<script>
+  // Beat browser scroll-restoration / harness jumps: always open on the hero.
+  try { history.scrollRestoration = 'manual'; } catch (e) {}
+  document.documentElement.classList.add('js-motion');
+  window.addEventListener('load', function () {
+    if (!location.hash) { window.scrollTo(0, 0); requestAnimationFrame(function(){ window.scrollTo(0,0); }); }
+  });
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Inconsolata:wght@300;400;500;600&family=Hind:wght@400;500&display=swap" rel="stylesheet">
-<script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="90aebe7a-b827-4bf3-932c-fda3d548bf45"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700;1,900&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&family=Libre+Caslon+Display&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,700&display=swap" rel="stylesheet">
+<!-- Beehiiv attribution tracking -->
+<script async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
 <style>
-:root {
-  --noir: #000000;
-  --ink: #0a0a0a;
-  --card: #111111;
-  --line: #1e1e1e;
-  --line2: #2a2a2a;
-  --gold: #c8a84b;
-  --gold2: #e8c97a;
-  --gold-pale: #f5e6b8;
-  --text: #ffffff;
-  --muted: #888888;
-  --muted2: #aaaaaa;
-  --green: #00e676;
-  --red: #ff5252;
-  --accent: #c8a84b;
+:root{
+  --gold:#C9A84C; --gold2:#E8C97A; --accent:var(--gold); --accent2:var(--gold2);
+  --noir:#06080A; --noir2:#0A0E12;
+  --surface:#0F1518; --surface2:#11181d; --border:#1E2A34; --border2:#26323c;
+  --text:#E6EEF4; --muted:#6E8595; --muted2:#92A8B6;
+  --pos:#3DD68C; --neg:#F0556B;
+  --head:'Playfair Display', serif;
+  --mono:'DM Mono', monospace;
+  --body:'Instrument Sans', sans-serif;
+  --maxw:1140px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+body{background:var(--noir);color:var(--text);font-family:var(--body);line-height:1.6;overflow-x:hidden;}
+::selection{background:rgba(201,168,76,.28);color:var(--text);}
+
+/* atmospheric bg + film grain */
+.glow{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(1100px 620px at 72% -8%, color-mix(in srgb, var(--accent) 11%, transparent), transparent 60%),
+             radial-gradient(820px 700px at 6% 108%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 55%);}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+.wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 28px;width:100%;}
+
+/* ---------- shared type ---------- */
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);
+  display:inline-flex;align-items:center;gap:12px;}
+.eyebrow.center{justify-content:center;}
+.eyebrow .ln{width:26px;height:1px;background:var(--accent);opacity:.55;display:inline-block;}
+h1,h2,h3{font-family:var(--head);letter-spacing:-.5px;}
+.sec-tag{font-family:var(--mono);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);
+  margin-bottom:20px;display:flex;align-items:center;gap:12px;justify-content:center;}
+.sec-tag::before{content:'';width:24px;height:1px;background:var(--accent);}
+.h2{font-family:var(--head);font-weight:900;font-size:clamp(30px,4.4vw,46px);letter-spacing:-1px;text-align:center;line-height:1.08;margin-bottom:16px;}
+.h2 em{font-style:italic;color:var(--accent);}
+.sec-sub{text-align:center;color:var(--muted2);font-size:clamp(15px,1.6vw,17px);max-width:580px;margin:0 auto 56px;text-wrap:pretty;}
+
+section{padding:clamp(64px,9vw,108px) 0;position:relative;z-index:2;}
+
+/* ---------- buttons ---------- */
+.btn{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500;
+  padding:15px 26px;border-radius:6px;text-decoration:none;cursor:pointer;border:1px solid transparent;
+  transition:transform .2s var(--ease), background .2s, border-color .2s, color .2s;display:inline-flex;align-items:center;gap:9px;justify-content:center;}
+.btn-primary{background:var(--accent);color:var(--noir);border-color:var(--accent);font-weight:500;}
+.btn-primary:hover{background:var(--accent2);border-color:var(--accent2);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border2);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:40;display:flex;justify-content:space-between;align-items:center;
+  padding:16px 28px;max-width:100%;background:color-mix(in srgb,var(--noir) 72%,transparent);
+  backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid transparent;transition:border-color .3s, background .3s;}
+nav.scrolled{border-bottom-color:var(--border);background:color-mix(in srgb,var(--noir) 88%,transparent);}
+.nav-in{max-width:var(--maxw);margin:0 auto;width:100%;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-family:var(--head);font-weight:900;font-size:24px;color:var(--accent);letter-spacing:-1px;text-decoration:none;line-height:1;}
+.logo small{font-family:var(--mono);font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);display:block;margin-top:3px;font-weight:400;}
+.nav-right{display:flex;align-items:center;gap:28px;}
+.nav-link{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);text-decoration:none;transition:color .2s;}
+.nav-link:hover{color:var(--accent);}
+.nav-cta{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--noir);background:var(--accent);padding:11px 18px;border-radius:5px;text-decoration:none;font-weight:500;transition:background .2s,transform .2s;}
+.nav-cta:hover{background:var(--accent2);transform:translateY(-1px);}
+.nav-links-group{display:flex;align-items:center;gap:28px;}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:1;transform:none;}
+html.js-motion .reveal{transition:opacity .8s var(--ease), transform .8s var(--ease);}
+@media (prefers-reduced-motion: no-preference){
+  html.js-motion .reveal:not(.in){opacity:0;transform:translateY(22px);}
+}
+body.nomotion .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+
+/* ---------- hero ---------- */
+.hero{padding:clamp(48px,7vw,84px) 0 clamp(40px,5vw,64px);}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,64px);align-items:center;}
+.hero h1{font-family:var(--head);font-weight:900;font-size:clamp(40px,6.2vw,72px);line-height:1.0;letter-spacing:-2px;margin:22px 0 22px;text-wrap:balance;}
+.hero h1 em{font-style:italic;color:var(--accent);}
+.hero .sub{font-size:clamp(16px,1.8vw,19px);color:var(--muted2);max-width:520px;margin-bottom:30px;text-wrap:pretty;}
+.hero .sub b{color:var(--text);font-weight:600;}
+.signup{display:flex;gap:10px;max-width:480px;flex-wrap:wrap;}
+.signup .field{flex:1;min-width:220px;position:relative;}
+.signup input{width:100%;font-family:var(--mono);font-size:13px;color:var(--text);background:var(--surface);
+  border:1px solid var(--border2);border-radius:6px;padding:15px 16px;transition:border-color .2s, box-shadow .2s;letter-spacing:.3px;}
+.signup input::placeholder{color:var(--muted);}
+.signup input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent);}
+.signup input.err{border-color:var(--neg);}
+.signup .err-msg{position:absolute;top:calc(100% + 6px);left:2px;font-family:var(--mono);font-size:10px;color:var(--neg);letter-spacing:.5px;}
+.signup-note{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.5px;margin-top:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.signup-note .avatars{display:flex;}
+.avatars span{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--noir);margin-left:-7px;background:linear-gradient(135deg,var(--border2),var(--surface));}
+.avatars span:first-child{margin-left:0;}
+.signup-success{font-family:var(--mono);font-size:13px;color:var(--pos);letter-spacing:.5px;display:flex;align-items:center;gap:10px;background:color-mix(in srgb,var(--pos) 8%,transparent);border:1px solid color-mix(in srgb,var(--pos) 30%,transparent);padding:16px 18px;border-radius:8px;max-width:480px;}
+
+/* hero brief card */
+.brief-card{background:linear-gradient(165deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.7), 0 0 70px -20px color-mix(in srgb,var(--accent) 18%,transparent);}
+.bc-head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--noir) 40%,transparent);}
+.bc-brand{font-family:var(--head);font-weight:900;font-size:16px;color:var(--accent);}
+.bc-date{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+.bc-body{padding:20px;}
+.bc-kicker{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.bc-lede{font-family:var(--head);font-weight:700;font-size:19px;line-height:1.25;margin-bottom:14px;}
+.bc-rows{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.bc-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;background:var(--surface);}
+.bc-row .nm{font-family:var(--mono);font-size:11px;color:var(--muted2);letter-spacing:.5px;}
+.bc-row .val{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;}
+.chg{font-family:var(--mono);font-size:11px;font-weight:500;}
+.chg.pos{color:var(--pos);} .chg.neg{color:var(--neg);}
+
+/* ticker */
+.ticker{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--noir2) 70%,transparent);overflow:hidden;position:relative;z-index:2;}
+.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--noir),transparent);}
+.ticker::after{right:0;background:linear-gradient(270deg,var(--noir),transparent);}
+.ticker-track{display:flex;gap:0;width:max-content;animation:scroll-x 42s linear infinite;}
+body.nomotion .ticker-track{animation:none;}
+.tk{display:flex;align-items:center;gap:10px;padding:13px 26px;border-right:1px solid var(--border);white-space:nowrap;}
+.tk .sym{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--muted2);}
+.tk .px{font-family:var(--mono);font-size:11px;color:var(--text);}
+@keyframes scroll-x{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ---------- "in the brief" cards ---------- */
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.fcard{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:26px;transition:border-color .3s, transform .3s var(--ease);position:relative;overflow:hidden;}
+.fcard:hover{border-color:color-mix(in srgb,var(--accent) 50%,var(--border));transform:translateY(-3px);}
+.fcard .tag{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:inline-block;border:1px solid var(--border2);border-radius:20px;padding:4px 11px;}
+.fcard h3{font-family:var(--head);font-weight:700;font-size:21px;margin-bottom:9px;}
+.fcard p{font-size:14px;color:var(--muted2);margin-bottom:18px;text-wrap:pretty;}
+.spark-row{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;border-top:1px solid var(--border);padding-top:16px;}
+.spark-meta .lbl{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+.spark-meta .num{font-family:var(--head);font-weight:900;font-size:24px;line-height:1.1;margin-top:3px;}
+
+/* ---------- sample brief reader ---------- */
+.reader{background:var(--surface2);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-width:920px;margin:0 auto;
+  box-shadow:0 40px 90px -40px rgba(0,0,0,.7);}
+.reader-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--noir) 45%,transparent);flex-wrap:wrap;gap:12px;}
+.reader-meta{display:flex;align-items:center;gap:14px;}
+.reader-dot{width:9px;height:9px;border-radius:50%;background:var(--pos);box-shadow:0 0 8px var(--pos);}
+.reader-meta .t{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);}
+.lang-toggle{display:flex;gap:2px;background:var(--noir);border:1px solid var(--border2);border-radius:7px;padding:3px;}
+.lang-toggle button{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);background:transparent;border:none;padding:6px 14px;border-radius:5px;cursor:pointer;transition:.2s;}
+.lang-toggle button.active{background:var(--accent);color:var(--noir);font-weight:500;}
+.reader-body{padding:clamp(24px,3.5vw,44px);display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(24px,3vw,40px);}
+.reader-kicker{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+.reader-headline{font-family:var(--head);font-weight:900;font-size:clamp(24px,3vw,33px);line-height:1.12;letter-spacing:-1px;margin-bottom:18px;text-wrap:balance;}
+.reader-headline em{font-style:italic;color:var(--accent);}
+.reader-lede{font-size:15px;color:var(--muted2);line-height:1.7;margin-bottom:18px;}
+.reader-p{font-size:14px;color:var(--muted2);line-height:1.75;margin-bottom:14px;}
+.reader-p b{color:var(--text);font-weight:600;}
+.reader-side{display:flex;flex-direction:column;gap:14px;}
+.mini-stat{background:var(--noir);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.mini-stat .ms-l{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+.mini-stat .ms-v{font-family:var(--head);font-weight:900;font-size:30px;line-height:1.1;margin-top:5px;}
+.mini-stat .ms-sub{font-family:var(--mono);font-size:10px;color:var(--muted2);margin-top:4px;}
+.fade-swap{animation:fadeSwap .45s var(--ease) both;}
+@keyframes fadeSwap{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+/* ---------- how it works ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.step{padding:38px 32px;border-right:1px solid var(--border);background:var(--surface);position:relative;transition:background .3s;}
+.step:last-child{border-right:none;}
+.step:hover{background:var(--surface2);}
+.step-n{font-family:var(--head);font-weight:900;font-size:50px;color:var(--border2);line-height:1;margin-bottom:18px;transition:color .3s;}
+.step:hover .step-n{color:var(--accent);}
+.step h3{font-family:var(--body);font-weight:600;font-size:18px;margin-bottom:11px;}
+.step p{font-size:14px;color:var(--muted2);text-wrap:pretty;}
+.step .micro{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:1px;margin-top:16px;}
+
+/* ---------- PRO section + rule builder ---------- */
+.pro-shell{background:linear-gradient(165deg,#11181d,#0c1216);border:1px solid color-mix(in srgb,var(--accent) 45%,var(--border));border-radius:18px;padding:clamp(28px,4vw,52px);
+  box-shadow:0 0 80px -30px color-mix(in srgb,var(--accent) 30%,transparent);}
+.pro-top{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:30px;}
+.pro-top h3{font-family:var(--head);font-weight:900;font-size:clamp(24px,3vw,34px);line-height:1.12;letter-spacing:-1px;max-width:560px;}
+.pro-top h3 em{font-style:italic;color:var(--accent);}
+.pro-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.pbadge{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:1px solid;}
+.pbadge.green{color:var(--pos);border-color:color-mix(in srgb,var(--pos) 35%,transparent);background:color-mix(in srgb,var(--pos) 10%,transparent);}
+.pbadge.gold{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 35%,transparent);background:color-mix(in srgb,var(--accent) 8%,transparent);}
+.builder-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch;}
+.builder{background:var(--noir);border:1px solid var(--border);border-radius:12px;padding:24px;display:flex;flex-direction:column;}
+.builder-label{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.sentence{font-family:var(--head);font-size:21px;line-height:1.7;color:var(--muted2);font-weight:500;flex:1;}
+.sentence .tok{display:inline-flex;align-items:center;}
+.tok-select{position:relative;display:inline-block;}
+.tok-btn{font-family:var(--mono);font-size:13px;letter-spacing:.3px;color:var(--noir);background:var(--accent);border:none;border-radius:5px;padding:3px 10px;margin:0 2px;cursor:pointer;font-weight:500;transition:background .2s, transform .15s;display:inline-flex;align-items:center;gap:6px;vertical-align:middle;}
+.tok-btn:hover{background:var(--accent2);}
+.tok-btn.alt{background:transparent;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);}
+.tok-btn.alt:hover{background:color-mix(in srgb,var(--accent) 12%,transparent);}
+.tok-btn .car{font-size:9px;opacity:.7;}
+.tok-menu{position:absolute;top:calc(100% + 6px);left:0;z-index:30;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:5px;min-width:160px;box-shadow:0 20px 50px -15px rgba(0,0,0,.8);animation:fadeSwap .18s var(--ease) both;}
+.tok-menu button{display:block;width:100%;text-align:left;font-family:var(--mono);font-size:12px;color:var(--muted2);background:transparent;border:none;padding:9px 12px;border-radius:5px;cursor:pointer;transition:.15s;letter-spacing:.3px;}
+.tok-menu button:hover{background:var(--noir);color:var(--text);}
+.tok-menu button.sel{color:var(--accent);}
+.builder-run{margin-top:20px;}
+.builder-run .btn{width:100%;}
+
+/* result card */
+.result{background:var(--noir);border:1px solid var(--border);border-radius:12px;padding:24px;position:relative;min-height:340px;display:flex;flex-direction:column;}
+.result-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;color:var(--muted);}
+.result-empty .ph{width:100%;height:120px;border:1px dashed var(--border2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;background:repeating-linear-gradient(135deg,transparent,transparent 9px,color-mix(in srgb,var(--border) 50%,transparent) 9px,color-mix(in srgb,var(--border) 50%,transparent) 10px);}
+.result-empty p{font-family:var(--mono);font-size:11px;letter-spacing:.5px;}
+.res-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.res-title{font-family:var(--head);font-weight:700;font-size:16px;line-height:1.25;max-width:70%;}
+.verdict{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 10px;border-radius:5px;border:1px solid;white-space:nowrap;}
+.verdict.real{color:var(--pos);border-color:color-mix(in srgb,var(--pos) 40%,transparent);background:color-mix(in srgb,var(--pos) 10%,transparent);}
+.verdict.fragile{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 40%,transparent);background:color-mix(in srgb,var(--accent) 10%,transparent);}
+.verdict.noise{color:var(--neg);border-color:color-mix(in srgb,var(--neg) 40%,transparent);background:color-mix(in srgb,var(--neg) 10%,transparent);}
+.res-sub{font-family:var(--mono);font-size:10px;color:var(--muted2);margin-bottom:14px;letter-spacing:.5px;}
+.res-hero{display:flex;align-items:baseline;gap:12px;margin-bottom:12px;}
+.res-big{font-family:var(--head);font-weight:900;font-size:38px;line-height:1;}
+.res-vs{font-family:var(--mono);font-size:11px;color:var(--muted2);}
+.res-curve{height:84px;margin-bottom:16px;}
+.res-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.res-stat{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:11px;}
+.res-stat .sl{font-family:var(--mono);font-size:8px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;}
+.res-stat .sv{font-family:var(--mono);font-size:14px;color:var(--text);margin-top:4px;}
+.curve-line{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.2s var(--ease) forwards;}
+body.nomotion .curve-line{animation:none;stroke-dashoffset:0;}
+@keyframes draw{to{stroke-dashoffset:0;}}
+
+.pro-foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:28px;padding-top:24px;border-top:1px solid var(--border);}
+.pro-price{font-family:var(--mono);font-size:13px;color:var(--text);}
+.pro-price b{color:var(--accent);font-size:20px;font-weight:500;}
+
+/* ---------- final CTA ---------- */
+.final{text-align:center;background:linear-gradient(165deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:18px;padding:clamp(48px,6vw,72px) clamp(28px,5vw,56px);}
+.final .h2{margin-bottom:18px;}
+.final p{color:var(--muted2);font-size:16px;margin:0 auto 34px;max-width:520px;}
+.final .signup{margin:0 auto;justify-content:center;}
+.final .signup-note,.final .signup-success{justify-content:center;margin-left:auto;margin-right:auto;}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--border);padding:50px 0 60px;position:relative;z-index:2;margin-top:20px;}
+.foot-in{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:30px;}
+.foot-brand{font-family:var(--head);font-weight:900;font-size:22px;color:var(--accent);}
+.foot-tag{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:6px;}
+.foot-links{display:flex;gap:18px;margin-top:18px;flex-wrap:wrap;}
+.foot-dis{font-family:var(--mono);font-size:9px;color:var(--muted);line-height:1.8;max-width:540px;text-align:right;}
+
+/* ---------- PRO PAGE (backtest) sections ---------- */
+.view{animation:viewIn .5s var(--ease) both;}
+body.nomotion .view{animation:none;}
+@keyframes viewIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+
+.pro-hero{padding:clamp(48px,7vw,84px) 0 clamp(36px,5vw,56px);text-align:center;}
+.pro-hero h1{font-family:var(--head);font-weight:900;font-size:clamp(38px,5.6vw,64px);line-height:1.02;letter-spacing:-2px;margin:22px auto;max-width:14ch;text-wrap:balance;}
+.pro-hero h1 em{font-style:italic;color:var(--accent);}
+.pro-hero .sub{font-size:clamp(16px,1.7vw,19px);color:var(--muted2);max-width:600px;margin:0 auto 14px;text-wrap:pretty;}
+.pro-hero .sub b{color:var(--text);font-weight:600;}
+.pro-hero .note{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:34px;}
+.pro-hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+
+.strip{display:flex;justify-content:center;flex-wrap:wrap;margin-top:54px;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.strip-cell{padding:22px 30px;border-right:1px solid var(--border);background:var(--surface);flex:1;min-width:150px;}
+.strip-cell:last-child{border-right:none;}
+.strip-val{font-family:var(--head);font-weight:900;font-size:28px;color:var(--accent);line-height:1;}
+.strip-val span{font-size:14px;}
+.strip-lbl{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:9px;}
+
+.prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.prob{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:30px;transition:border-color .3s, transform .3s var(--ease);}
+.prob:hover{border-color:color-mix(in srgb,var(--accent) 40%,var(--border));transform:translateY(-3px);}
+.prob-num{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;margin-bottom:16px;}
+.prob h3{font-family:var(--head);font-weight:700;font-size:21px;margin-bottom:11px;}
+.prob p{font-size:14px;color:var(--muted2);text-wrap:pretty;}
+
+.proof{background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:clamp(28px,4vw,48px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,44px);align-items:center;}
+.proof-text h3{font-family:var(--head);font-weight:900;font-size:clamp(24px,3vw,30px);line-height:1.14;margin-bottom:16px;}
+.proof-text p{color:var(--muted2);font-size:15px;margin-bottom:18px;text-wrap:pretty;}
+.check{display:flex;gap:11px;align-items:flex-start;margin-bottom:12px;font-size:14px;color:var(--muted2);}
+.check b{color:var(--text);font-weight:600;}
+.check-i{color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+
+.moat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.moat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:26px;text-align:center;transition:border-color .3s, transform .3s var(--ease);}
+.moat:hover{border-color:color-mix(in srgb,var(--accent) 40%,var(--border));transform:translateY(-3px);}
+.moat-ic{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:1px;margin-bottom:14px;}
+.moat h4{font-family:var(--body);font-weight:600;font-size:15px;margin-bottom:9px;}
+.moat p{font-size:13px;color:var(--muted2);}
+
+.pricing{display:flex;justify-content:center;}
+.price-card{background:linear-gradient(160deg,var(--surface2),var(--surface));border:1px solid var(--accent);border-radius:16px;padding:clamp(32px,4vw,48px);max-width:460px;width:100%;text-align:center;box-shadow:0 0 70px -25px color-mix(in srgb,var(--accent) 40%,transparent);}
+.price-badge{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);border:1px solid var(--border2);border-radius:20px;padding:6px 16px;display:inline-block;margin-bottom:24px;}
+.price{font-family:var(--head);font-weight:900;font-size:clamp(52px,7vw,64px);color:var(--text);line-height:1;}
+.price span{font-size:20px;color:var(--muted2);font-weight:700;}
+.price-note{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:9px;margin-bottom:28px;}
+.price-feats{text-align:left;margin-bottom:30px;}
+.pf{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;font-size:14px;color:var(--muted2);}
+.pf b{color:var(--text);font-weight:600;}
+.pf-i{color:var(--accent);flex-shrink:0;}
+.price-card .btn-primary{width:100%;font-size:13px;padding:17px;}
+.guarantee{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:18px;letter-spacing:.5px;}
+
+.faq-grid{max-width:780px;margin:40px auto 0;display:flex;flex-direction:column;}
+.faq-item{border-bottom:1px solid var(--border);overflow:hidden;}
+.faq-q{font-family:var(--body);font-weight:600;font-size:17px;color:var(--text);padding:22px 4px;display:flex;gap:12px;align-items:center;cursor:pointer;justify-content:space-between;transition:color .2s;}
+.faq-q:hover{color:var(--accent);}
+.faq-q .qrow{display:flex;gap:12px;align-items:baseline;}
+.faq-q .qrow::before{content:'Q';font-family:var(--mono);font-size:13px;color:var(--accent);}
+.faq-q .plus{font-family:var(--mono);color:var(--accent);transition:transform .3s var(--ease);flex-shrink:0;}
+.faq-q.open .plus{transform:rotate(45deg);}
+.faq-a{font-size:14px;color:var(--muted2);padding:0 25px 0 29px;max-height:0;opacity:0;transition:max-height .35s var(--ease), opacity .3s, padding .35s var(--ease);}
+.faq-a.open{max-height:200px;opacity:1;padding-bottom:22px;}
+
+@media(max-width:880px){
+  .prob-grid,.moat-grid{grid-template-columns:1fr 1fr;}
+  .proof{grid-template-columns:1fr;}
+}
+@media(max-width:560px){
+  .prob-grid,.moat-grid{grid-template-columns:1fr;}
 }
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--noir);
-  color: var(--text);
-  font-family: 'Hind', sans-serif;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+/* ---------- responsive ---------- */
+@media(max-width:880px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-visual{order:-1;}
+  .feature-grid{grid-template-columns:1fr;}
+  .steps{grid-template-columns:1fr;}
+  .step{border-right:none;border-bottom:1px solid var(--border);}
+  .step:last-child{border-bottom:none;}
+  .builder-grid{grid-template-columns:1fr;}
+  .reader-body{grid-template-columns:1fr;}
+  .foot-dis{text-align:left;}
+  .nav-links-group{display:none;}
 }
-
-/* ── CURSOR ── */
-.cur { position: fixed; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
-.cur-ring { position: fixed; width: 28px; height: 28px; border: 1px solid rgba(200,168,75,.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
-
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 48px;
-  transition: background .3s, border-color .3s;
-  border-bottom: 1px solid transparent;
+@media(max-width:560px){
+  .wrap{padding:0 20px;}
+  .signup{flex-direction:column;}
+  .signup .btn{width:100%;}
 }
-nav.stuck { background: rgba(0,0,0,.95); backdrop-filter: blur(20px); border-color: var(--line2); }
-.logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--gold); text-decoration: none; letter-spacing: -.5px; }
-.nav-right { display: flex; align-items: center; gap: 28px; }
-.nav-link { font-family: 'Inconsolata', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s; }
-.nav-link:hover { color: var(--gold); }
-.nav-cta {
-  font-family: 'Inconsolata', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-  background: var(--gold); color: var(--noir); border: none; padding: 9px 18px; cursor: pointer;
-  font-weight: 600; transition: background .2s, transform .15s;
-}
-.nav-cta:hover { background: var(--gold2); transform: translateY(-1px); }
-
-/* ── FREE BADGE ── */
-.free-banner {
-  background: var(--gold);
-  color: var(--noir);
-  text-align: center;
-  padding: 8px;
-  font-family: 'Inconsolata', monospace;
-  font-size: 11px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  font-weight: 600;
-  position: relative;
-  z-index: 100;
-}
-
-/* ── HERO ── */
-.hero {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding-top: 52px;
-}
-
-.hero-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 80px 64px 80px 64px;
-  border-right: 1px solid var(--line2);
-  position: relative;
-}
-
-.free-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(200,168,75,.12);
-  border: 1px solid rgba(200,168,75,.4);
-  padding: 6px 14px;
-  margin-bottom: 28px;
-  width: fit-content;
-}
-.free-pill-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse-dot 1.5s ease-in-out infinite; }
-@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.3} }
-.free-pill-text { font-family: 'Inconsolata', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
-
-h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(42px, 4.5vw, 72px);
-  font-weight: 700;
-  line-height: 1.0;
-  letter-spacing: -1.5px;
-  margin-bottom: 20px;
-}
-h1 em { font-style: italic; color: var(--gold); }
-
-.value-points {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 36px;
-}
-.vp {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px 16px;
-  border-left: 2px solid var(--gold);
-  background: rgba(200,168,75,.04);
-}
-.vp-num { font-family: 'Inconsolata', monospace; font-size: 10px; color: var(--gold); letter-spacing: 1px; flex-shrink: 0; margin-top: 2px; }
-.vp-text { font-size: 14px; color: var(--muted2); line-height: 1.6; }
-.vp-text strong { color: var(--text); }
-
-.urgency {
-  font-family: 'Inconsolata', monospace;
-  font-size: 11px;
-  letter-spacing: 1px;
-  color: var(--gold);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.urgency::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--gold); }
-
-/* FORM */
-.form-wrap {
-  display: flex;
-  border: 1px solid var(--line2);
-  max-width: 440px;
-  transition: border-color .2s;
-  margin-bottom: 10px;
-}
-.form-wrap:focus-within { border-color: var(--gold); }
-.form-input {
-  flex: 1; background: var(--card); border: none;
-  padding: 14px 18px; font-family: 'Inconsolata', monospace;
-  font-size: 13px; color: var(--text); outline: none;
-}
-.form-input::placeholder { color: #555; }
-.form-submit {
-  background: var(--gold); color: var(--noir); border: none;
-  padding: 14px 22px; font-family: 'Inconsolata', monospace;
-  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-  font-weight: 600; cursor: pointer; white-space: nowrap;
-  transition: background .2s;
-}
-.form-submit:hover { background: var(--gold2); }
-.form-submit:disabled { opacity: .6; cursor: default; }
-.form-note { font-family: 'Inconsolata', monospace; font-size: 10px; color: #555; letter-spacing: .5px; }
-
-.social-proof-mini {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 28px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line2);
-}
-.avatars { display: flex; }
-.av { width: 28px; height: 28px; border-radius: 50%; background: var(--line2); border: 2px solid var(--noir); margin-right: -8px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--gold); }
-.sp-text { font-family: 'Inconsolata', monospace; font-size: 10px; color: var(--muted); letter-spacing: .5px; margin-left: 12px; }
-.sp-text strong { color: var(--gold); }
-
-.hero-right {
-  background: var(--ink);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 48px;
-  position: relative;
-  overflow: hidden;
-}
-.hero-right::before {
-  content: '';
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(200,168,75,.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(200,168,75,.03) 1px, transparent 1px);
-  background-size: 32px 32px;
-  pointer-events: none;
-}
-
-.live-badge {
-  position: absolute;
-  top: 20px; left: 20px;
-  display: flex; align-items: center; gap: 6px;
-  background: rgba(0,230,118,.1);
-  border: 1px solid rgba(0,230,118,.3);
-  padding: 4px 10px;
-  font-family: 'Inconsolata', monospace;
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: var(--green);
-  text-transform: uppercase;
-  z-index: 2;
-}
-.live-dot { width: 5px; height: 5px; background: var(--green); border-radius: 50%; animation: pulse-dot 1.2s ease-in-out infinite; }
-
-.email-mockup {
-  width: 100%;
-  max-width: 420px;
-  background: var(--noir);
-  border: 1px solid var(--line2);
-  position: relative;
-  z-index: 2;
-  box-shadow: 0 0 80px rgba(200,168,75,.06);
-}
-.em-bar {
-  background: var(--card);
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--line2);
-  display: flex; align-items: center; gap: 8px;
-}
-.em-dot { width: 8px; height: 8px; border-radius: 50%; }
-.em-title { font-family: 'Inconsolata', monospace; font-size: 9px; letter-spacing: 2px; color: var(--muted); margin-left: 6px; }
-.em-body { padding: 18px; }
-.em-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-.em-logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--gold); }
-.em-date { font-family: 'Inconsolata', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; }
-.em-tag { font-family: 'Inconsolata', monospace; font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-
-.em-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--line2); border: 1px solid var(--line2); margin-bottom: 14px; }
-.em-cell { background: #0a0a0a; padding: 8px 10px; }
-.em-sym { font-family: 'Inconsolata', monospace; font-size: 8px; color: var(--muted); letter-spacing: 1px; margin-bottom: 2px; }
-.em-price { font-family: 'Inconsolata', monospace; font-size: 12px; font-weight: 600; color: var(--text); }
-.em-chg { font-family: 'Inconsolata', monospace; font-size: 9px; margin-top: 1px; }
-.up { color: var(--green); }
-.dn { color: var(--red); }
-
-.em-signal {
-  background: #0d0d0d;
-  border-left: 2px solid var(--gold);
-  padding: 10px 12px;
-  margin-bottom: 12px;
-}
-.em-signal-label { font-family: 'Inconsolata', monospace; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
-.em-signal-text { font-family: 'Inconsolata', monospace; font-size: 10px; line-height: 1.6; color: #aaa; }
-.em-signal-text strong { color: #fff; }
-
-.em-pm { margin-bottom: 8px; }
-.em-pm-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--line); font-family: 'Inconsolata', monospace; font-size: 10px; }
-.em-pm-row:last-child { border-bottom: none; }
-.em-pm-event { color: #888; }
-.em-pm-val { font-weight: 600; }
-
-.em-footer { border-top: 1px solid var(--line2); padding-top: 10px; display: flex; justify-content: space-between; }
-.em-footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 700; color: var(--gold); }
-.em-footer-note { font-family: 'Inconsolata', monospace; font-size: 8px; color: #444; }
-
-/* ── TICKER STRIP ── */
-.ticker-strip {
-  background: var(--card); border-top: 1px solid var(--line2); border-bottom: 1px solid var(--line2);
-  padding: 10px 0; overflow: hidden; white-space: nowrap;
-}
-.ticker-inner { display: inline-flex; gap: 0; animation: ticker 20s linear infinite; }
-.tick { display: inline-flex; align-items: center; gap: 6px; padding: 0 24px; border-right: 1px solid var(--line2); font-family: 'Inconsolata', monospace; font-size: 11px; }
-.tick-name { color: var(--muted); }
-.tick-val { color: var(--text); font-weight: 500; }
-@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-/* ── WHAT YOU GET ── */
-.what-section {
-  padding: 100px 64px;
-  background: var(--ink);
-  border-top: 1px solid var(--line2);
-  border-bottom: 1px solid var(--line2);
-}
-.section-eyebrow {
-  font-family: 'Inconsolata', monospace; font-size: 9px; letter-spacing: 4px;
-  text-transform: uppercase; color: var(--gold); margin-bottom: 20px;
-  display: flex; align-items: center; gap: 10px;
-}
-.section-eyebrow::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--gold); }
-h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(32px, 3.5vw, 52px);
-  font-weight: 700; line-height: 1.05; letter-spacing: -1px; margin-bottom: 16px;
-}
-h2 em { font-style: italic; color: var(--gold); }
-.sec-sub { font-size: 15px; color: var(--muted2); max-width: 500px; line-height: 1.7; margin-bottom: 56px; }
-
-.three-points {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1px;
-  background: var(--line2);
-  border: 1px solid var(--line2);
-}
-.point-card {
-  background: var(--noir);
-  padding: 40px 32px;
-  position: relative;
-  overflow: hidden;
-  transition: background .3s;
-}
-.point-card:hover { background: #0a0a0a; }
-.point-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: var(--gold); transform: scaleX(0); transform-origin: left;
-  transition: transform .4s ease;
-}
-.point-card:hover::before { transform: scaleX(1); }
-.point-icon { font-size: 28px; margin-bottom: 16px; }
-.point-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
-.point-desc { font-size: 13px; color: var(--muted2); line-height: 1.7; }
-.point-tag { display: inline-block; font-family: 'Inconsolata', monospace; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(200,168,75,.3); padding: 3px 8px; margin-top: 14px; }
-
-/* ── HOW IT WORKS ── */
-.how-section { padding: 100px 64px; }
-.steps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; margin-top: 56px; }
-.step { padding: 32px 0; border-top: 1px solid var(--line2); }
-.step-num { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 700; color: var(--line2); line-height: 1; margin-bottom: 16px; transition: color .3s; }
-.step:hover .step-num { color: var(--gold); }
-.step-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-.step-desc { font-size: 13px; color: var(--muted2); line-height: 1.7; }
-
-/* ── MUSK STRIP ── */
-.musk-strip {
-  background: var(--card);
-  border-top: 1px solid var(--line2);
-  border-bottom: 1px solid var(--line2);
-  padding: 32px 64px;
-  display: flex;
-  align-items: center;
-  gap: 48px;
-  overflow-x: auto;
-}
-.musk-item { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-.musk-rule { font-family: 'Inconsolata', monospace; font-size: 9px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; }
-.musk-text { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 700; color: var(--muted2); white-space: nowrap; }
-.musk-sep { width: 1px; height: 32px; background: var(--line2); flex-shrink: 0; }
-
-/* ── CTA ── */
-.cta-section {
-  padding: 140px 64px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  background: var(--ink);
-  border-top: 1px solid var(--line2);
-}
-.cta-section::before {
-  content: '';
-  position: absolute; width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(200,168,75,.07) 0%, transparent 70%);
-  border-radius: 50%; top: 50%; left: 50%;
-  transform: translate(-50%, -50%); pointer-events: none;
-}
-.cta-free-tag {
-  display: inline-block;
-  background: var(--gold);
-  color: var(--noir);
-  font-family: 'Inconsolata', monospace;
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  font-weight: 700;
-  padding: 6px 16px;
-  margin-bottom: 24px;
-}
-.cta-section h2 { max-width: 640px; margin: 0 auto 16px; }
-.cta-sub { font-size: 15px; color: var(--muted2); margin: 0 auto 12px; max-width: 420px; line-height: 1.6; }
-.cta-urgency {
-  font-family: 'Inconsolata', monospace;
-  font-size: 11px;
-  color: var(--gold);
-  letter-spacing: 1px;
-  margin-bottom: 32px;
-}
-.cta-form { max-width: 440px; margin: 0 auto; }
-.cta-form .form-wrap { max-width: 100%; }
-.cta-note { font-family: 'Inconsolata', monospace; font-size: 10px; color: #555; margin-top: 10px; letter-spacing: .5px; }
-
-/* ── FOOTER ── */
-footer {
-  padding: 32px 64px;
-  border-top: 1px solid var(--line2);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--gold); }
-.footer-links { display: flex; gap: 24px; list-style: none; }
-.footer-links a { font-family: 'Inconsolata', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s; }
-.footer-links a:hover { color: var(--gold); }
-.footer-copy { font-family: 'Inconsolata', monospace; font-size: 10px; color: #333; }
-
-/* ── SCROLL REVEALS ── */
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
-.reveal.in { opacity: 1; transform: translateY(0); }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  nav { padding: 14px 20px; }
-  .nav-link { display: none; }
-  .hero { grid-template-columns: 1fr; }
-  .hero-right { display: none; }
-  .hero-left { padding: 80px 24px 60px; }
-  .what-section, .how-section { padding: 72px 24px; }
-  .three-points, .steps { grid-template-columns: 1fr; }
-  .musk-strip { padding: 24px; gap: 24px; }
-  footer { flex-direction: column; gap: 20px; text-align: center; }
-  .cta-section { padding: 80px 24px; }
-}
-
-/* ── ANIMATIONS ── */
-@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-.hero-left > * { animation: fadeUp .6s ease both; }
-.hero-left > *:nth-child(1){animation-delay:.1s}
-.hero-left > *:nth-child(2){animation-delay:.2s}
-.hero-left > *:nth-child(3){animation-delay:.35s}
-.hero-left > *:nth-child(4){animation-delay:.45s}
-.hero-left > *:nth-child(5){animation-delay:.55s}
-.hero-left > *:nth-child(6){animation-delay:.65s}
-.hero-left > *:nth-child(7){animation-delay:.72s}
+#root{position:relative;z-index:2;}
 </style>
 </head>
 <body>
+<div class="glow"></div>
+<div class="grain"></div>
+<div id="root"></div>
 
-<div class="cur" id="cur"></div>
-<div class="cur-ring" id="ring"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
 
-<div class="free-banner">⚡ 100% Free Knowledge · No Credit Card · No Paywall · Ever</div>
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useCallback, useMemo } = React;
 
-<nav id="nav">
-  <a href="#" class="logo">Alphai</a>
-  <div class="nav-right">
-    <a href="#what" class="nav-link">What you get</a>
-    <a href="#how" class="nav-link">How it works</a>
-    <button class="nav-cta" onclick="document.getElementById('hero-email').focus()">Get Free Brief</button>
-  </div>
-</nav>
+/* =========================================================
+   Beehiiv newsletter publication form id
+   ========================================================= */
+const BEEHIIV_FORM_ID = '90aebe7a-b827-4bf3-932c-fda3d548bf45';
 
-<section class="hero" id="top">
-  <div class="hero-left">
-    <div class="free-pill">
-      <div class="free-pill-dot"></div>
-      <span class="free-pill-text">Free daily knowledge — no strings attached</span>
-    </div>
-    <h1>The <em>smartest</em><br>5 minutes of<br>your morning.</h1>
-    <div class="value-points">
-      <div class="vp">
-        <span class="vp-num">01</span>
-        <span class="vp-text"><strong>Free market intelligence, every day at 7AM CET.</strong> AI-powered brief on European stocks, crypto &amp; prediction markets. No Bloomberg terminal required.</span>
+/* =========================================================
+   DATA — Alphai mock data
+   ========================================================= */
+const TICKER = [
+  { sym: 'FTSE MIB', px: '34,812', chg: '+0.74%', dir: 'pos' },
+  { sym: 'DAX', px: '18,946', chg: '+0.31%', dir: 'pos' },
+  { sym: 'CAC 40', px: '7,612', chg: '-0.18%', dir: 'neg' },
+  { sym: 'IBEX 35', px: '11,288', chg: '+0.52%', dir: 'pos' },
+  { sym: 'BTP 10Y', px: '3.61%', chg: '-4bps', dir: 'pos' },
+  { sym: 'BTC-EUR', px: '€61,420', chg: '+2.10%', dir: 'pos' },
+  { sym: 'ETH-EUR', px: '€3,184', chg: '-1.04%', dir: 'neg' },
+  { sym: 'ECB rate', px: '3.25%', chg: 'hold', dir: 'neg' },
+  { sym: 'POLY · EU election', px: '0.62', chg: '+0.05', dir: 'pos' },
+  { sym: 'STOXX 600', px: '521.4', chg: '+0.28%', dir: 'pos' },
+];
+
+const HERO_ROWS = [
+  { nm: 'FTSE MIB', val: '34,812', chg: '+0.74%', dir: 'pos' },
+  { nm: 'BTP 10Y yield', val: '3.61%', chg: '-4bps', dir: 'pos' },
+  { nm: 'BTC-EUR', val: '€61,420', chg: '+2.10%', dir: 'pos' },
+  { nm: 'Polymarket · ECB cut', val: '38%', chg: '+6pts', dir: 'pos' },
+];
+
+const FEATURES = [
+  {
+    tag: 'EU Equities',
+    h: 'Indices & single names',
+    p: 'FTSE MIB, DAX, CAC, IBEX and the names moving them — with the BTP-Bund spread the US desks never mention.',
+    lbl: 'STOXX 600 · 30d',
+    num: '+3.8%',
+    dir: 'pos',
+    series: [22, 24, 21, 26, 25, 29, 27, 31, 30, 34, 33, 37, 39],
+  },
+  {
+    tag: 'MiCA Crypto',
+    h: 'Regulated, EU-native',
+    p: 'BTC, ETH and EUR-pairs read through the lens of MiCA — the framework that actually governs how Europe trades digital assets.',
+    lbl: 'BTC-EUR · 30d',
+    num: '+11.2%',
+    dir: 'pos',
+    series: [30, 28, 32, 31, 35, 33, 38, 36, 34, 39, 41, 44, 46],
+  },
+  {
+    tag: 'Prediction Markets',
+    h: 'Event-driven edges',
+    p: 'Polymarket & Kalshi odds on EU politics, rate decisions and macro — priced probability you can read against the tape.',
+    lbl: 'ECB cut · implied',
+    num: '38%',
+    dir: 'pos',
+    series: [12, 14, 13, 18, 16, 22, 20, 26, 24, 30, 28, 35, 38],
+  },
+];
+
+const BRIEF = {
+  en: {
+    kicker: 'The Morning Brief · Tue 02 Jun 2026',
+    headline: ['Milan leads Europe as ', 'BTP spreads', ' tighten'],
+    lede: 'The FTSE MIB outpaced its peers again, banks doing the heavy lifting as the BTP-Bund spread narrowed to a 14-month low. The tape is quietly pricing a friendlier ECB.',
+    p1: ['Italian lenders added ', '1.9%', ' as the spread closed at 122bps. Prediction markets nudged the odds of a June cut to ', '38%', ' — six points higher in a week.'],
+    p2: ['On the crypto side, ', 'BTC-EUR', ' held €61k despite a softer dollar print; MiCA-regulated venues saw the lightest outflows since March.'],
+    stats: [
+      { l: 'FTSE MIB', v: '+0.74%', s: 'Banks +1.9%', dir: 'pos' },
+      { l: 'BTP-Bund spread', v: '122bps', s: '14-mo low', dir: 'pos' },
+      { l: 'ECB cut · implied', v: '38%', s: '+6pts w/w', dir: 'pos' },
+    ],
+    read: '4 min read · bilingual',
+  },
+  it: {
+    kicker: 'Il Brief del Mattino · Mar 02 Giu 2026',
+    headline: ['Milano guida l’Europa con gli ', 'spread BTP', ' in calo'],
+    lede: 'Il FTSE MIB batte di nuovo i pari, con le banche a fare da traino mentre lo spread BTP-Bund scende ai minimi da 14 mesi. Il mercato prezza una BCE più morbida.',
+    p1: ['Le banche italiane guadagnano l’', '1,9%', ' con lo spread a 122 punti base. I prediction market portano la probabilità di un taglio a giugno al ', '38%', ' — sei punti in più in una settimana.'],
+    p2: ['Sul fronte crypto, ', 'BTC-EUR', ' tiene quota €61k nonostante un dollaro più debole; deflussi minimi dal mese di marzo sulle piattaforme MiCA.'],
+    stats: [
+      { l: 'FTSE MIB', v: '+0,74%', s: 'Banche +1,9%', dir: 'pos' },
+      { l: 'Spread BTP-Bund', v: '122pb', s: 'minimi 14 mesi', dir: 'pos' },
+      { l: 'Taglio BCE · stima', v: '38%', s: '+6pt sett.', dir: 'pos' },
+    ],
+    read: '4 min di lettura · bilingue',
+  },
+};
+
+const RB = {
+  asset: [
+    { id: 'mib', label: 'FTSE MIB' },
+    { id: 'dax', label: 'the DAX' },
+    { id: 'btceur', label: 'BTC-EUR' },
+    { id: 'etheur', label: 'ETH-EUR' },
+    { id: 'btp', label: 'BTP futures' },
+  ],
+  indicator: [
+    { id: 'rsi', label: 'RSI(14)' },
+    { id: 'ma50', label: 'the 50-day MA' },
+    { id: 'macd', label: 'MACD' },
+    { id: 'vol', label: 'volatility' },
+  ],
+  op: [
+    { id: 'below', label: 'drops below' },
+    { id: 'above', label: 'rises above' },
+    { id: 'cross', label: 'crosses' },
+  ],
+  level: [
+    { id: '30', label: '30' },
+    { id: '40', label: '40' },
+    { id: '50', label: '50' },
+    { id: '70', label: '70' },
+  ],
+  side: [
+    { id: 'buy', label: 'buy' },
+    { id: 'short', label: 'short' },
+  ],
+  exit: [
+    { id: 't5', label: '+5%' },
+    { id: 't8', label: '+8%' },
+    { id: 't10', label: '+10%' },
+    { id: 'ma', label: 'the MA reverts' },
+  ],
+};
+
+function runBacktest(state) {
+  const seedStr = Object.values(state).join('|');
+  let seed = 0;
+  for (let i = 0; i < seedStr.length; i++) seed = (seed * 31 + seedStr.charCodeAt(i)) % 100000;
+  const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+
+  let ret = -8 + rnd() * 34;
+  if (state.op === 'below' && state.indicator === 'rsi') ret += 6;
+  if (state.asset === 'btceur' || state.asset === 'etheur') ret += rnd() * 8;
+  ret = Math.round(ret * 10) / 10;
+
+  const bench = Math.round((-12 + rnd() * 18) * 10) / 10;
+  const sharpe = Math.round((ret / 30 + rnd() * 0.6) * 100) / 100;
+  const win = Math.round((46 + rnd() * 28));
+  const dd = -Math.round((6 + rnd() * 16) * 10) / 10;
+
+  let verdict = 'noise', vlabel = 'Likely noise';
+  if (ret > 12 && sharpe > 0.5) { verdict = 'real'; vlabel = 'Real edge'; }
+  else if (ret > 2) { verdict = 'fragile'; vlabel = 'Fragile edge'; }
+
+  const pts = 22;
+  let v = 50, path = [];
+  for (let i = 0; i < pts; i++) {
+    const drift = (ret / 100) * 1.6;
+    v += drift - 1 + rnd() * 2.2;
+    path.push(v);
+  }
+  const mn = Math.min(...path), mx = Math.max(...path);
+  const curve = path.map(p => 8 + (1 - (p - mn) / (mx - mn || 1)) * 54);
+
+  return { ret, bench, sharpe, win, dd, verdict, vlabel, curve };
+}
+
+/* =========================================================
+   CHARTS
+   ========================================================= */
+function Sparkline({ series, color = 'var(--accent)', w = 150, h = 46, fill = true }) {
+  const { line, area } = useMemo(() => {
+    const mn = Math.min(...series), mx = Math.max(...series);
+    const span = mx - mn || 1;
+    const step = w / (series.length - 1);
+    const pts = series.map((v, i) => [i * step, h - 4 - ((v - mn) / span) * (h - 8)]);
+    const line = pts.map((p, i) => (i === 0 ? `M${p[0].toFixed(1)},${p[1].toFixed(1)}` : `L${p[0].toFixed(1)},${p[1].toFixed(1)}`)).join(' ');
+    const area = `${line} L${w},${h} L0,${h} Z`;
+    return { line, area };
+  }, [series, w, h]);
+
+  const gid = useMemo(() => 'sg' + Math.random().toString(36).slice(2, 8), []);
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} width={w} height={h} preserveAspectRatio="none" style={{ display: 'block', overflow: 'visible' }}>
+      <defs>
+        <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={color} stopOpacity="0.28" />
+          <stop offset="100%" stopColor={color} stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      {fill && <path d={area} fill={`url(#${gid})`} />}
+      <path d={line} fill="none" stroke={color} strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function EquityCurve({ ys, animateKey }) {
+  const W = 300, H = 70;
+  const { line, area, len } = useMemo(() => {
+    const step = W / (ys.length - 1);
+    const pts = ys.map((y, i) => [i * step, y]);
+    const line = pts.map((p, i) => (i === 0 ? `M${p[0].toFixed(1)},${p[1].toFixed(1)}` : `L${p[0].toFixed(1)},${p[1].toFixed(1)}`)).join(' ');
+    const area = `${line} L${W},${H} L0,${H} Z`;
+    let len = 0;
+    for (let i = 1; i < pts.length; i++) {
+      len += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+    }
+    return { line, area, len: Math.ceil(len) };
+  }, [ys]);
+
+  const bench = 'M4,42 L44,45 L88,40 L132,50 L176,47 L220,55 L264,52 L296,58';
+
+  return (
+    <svg className="res-curve" viewBox={`0 0 ${W} ${H}`} width="100%" preserveAspectRatio="none" key={animateKey}>
+      <defs>
+        <linearGradient id="ecg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.26" />
+          <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path d={area} fill="url(#ecg)" />
+      <path d={bench} fill="none" stroke="var(--muted)" strokeWidth="1.2" strokeDasharray="4,3" opacity="0.55" />
+      <path className="curve-line" d={line} fill="none" stroke="var(--accent)" strokeWidth="1.9"
+        strokeLinejoin="round" strokeLinecap="round"
+        style={{ strokeDasharray: len, strokeDashoffset: len, animationName: 'draw' }} />
+    </svg>
+  );
+}
+
+/* =========================================================
+   REVEAL hook + wrapper
+   ========================================================= */
+function useReveal(dep) {
+  useEffect(() => {
+    const root = document.documentElement;
+    const els = Array.from(document.querySelectorAll('.reveal:not(.in)'));
+    if (!els.length) return;
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    let fired = false;
+    let io = null;
+
+    if ('IntersectionObserver' in window) {
+      io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { fired = true; e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+      els.forEach((e) => io.observe(e));
+    }
+
+    const raf = requestAnimationFrame(() => {
+      els.forEach((e) => {
+        const r = e.getBoundingClientRect();
+        if (r.top < vh * 0.94 && r.bottom > 0) e.classList.add('in');
+      });
+    });
+
+    const t = setTimeout(() => {
+      if (!fired) {
+        root.classList.remove('js-motion');
+        document.querySelectorAll('.reveal:not(.in)').forEach((e) => e.classList.add('in'));
+      }
+    }, 420);
+
+    return () => { if (io) io.disconnect(); cancelAnimationFrame(raf); clearTimeout(t); };
+  }, [dep]);
+}
+
+function Reveal({ children, delay = 0, as = 'div', className = '', ...rest }) {
+  const Tag = as;
+  return <Tag className={`reveal ${className}`} style={{ transitionDelay: `${delay}ms` }} {...rest}>{children}</Tag>;
+}
+
+/* =========================================================
+   SIGNUP — validation + success, wired to Beehiiv
+   ========================================================= */
+function Signup({ cta = 'Subscribe free', placeholder = 'you@email.com' }) {
+  const [email, setEmail] = useState('');
+  const [err, setErr] = useState(false);
+  const [done, setDone] = useState(false);
+
+  const submit = (e) => {
+    e.preventDefault();
+    const value = email.trim();
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    if (!ok) { setErr(true); return; }
+    setErr(false);
+    // Fire-and-forget to Beehiiv. Opaque response (no-cors) — we optimistically
+    // confirm; double opt-in on Beehiiv guards against invalid addresses.
+    try {
+      fetch(`https://app.beehiiv.com/forms/${BEEHIIV_FORM_ID}/subscriptions`, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: value }),
+      }).catch(() => {});
+    } catch (_) {}
+    setDone(true);
+  };
+
+  if (done) {
+    return (
+      <div className="signup-success">
+        <span style={{ fontFamily: 'var(--mono)' }}>✓</span>
+        <span>You’re in. Your first brief lands tomorrow at 07:00 CET.</span>
       </div>
-      <div class="vp">
-        <span class="vp-num">02</span>
-        <span class="vp-text"><strong>Built on Musk's Algorithm.</strong> We delete everything that isn't essential. You get signal, not noise. 3 data points. 1 key insight. Done.</span>
+    );
+  }
+
+  return (
+    <form className="signup" onSubmit={submit} noValidate>
+      <div className="field">
+        <input
+          type="email"
+          value={email}
+          placeholder={placeholder}
+          className={err ? 'err' : ''}
+          onChange={(e) => { setEmail(e.target.value); if (err) setErr(false); }}
+        />
+        {err && <span className="err-msg">enter a valid email</span>}
       </div>
-      <div class="vp">
-        <span class="vp-num">03</span>
-        <span class="vp-text"><strong>We're a startup. We ship fast.</strong> No corporate BS. If something breaks, we fix it same day. If you reply, a human reads it.</span>
-      </div>
-    </div>
-    <div class="urgency">Joining now = early access to Alphai Pro when it launches</div>
-    <form class="form-wrap" data-beehiiv-form="90aebe7a-b827-4bf3-932c-fda3d548bf45">
-      <input type="email" id="hero-email" name="email" class="form-input" placeholder="your@email.com" required autocomplete="email">
-      <button type="submit" class="form-submit">Get It Free →</button>
+      <button type="submit" className="btn btn-primary">{cta} →</button>
     </form>
-    <p class="form-note">Free forever · Unsubscribe in one click · No spam, ever</p>
-    <div class="social-proof-mini">
-      <div class="avatars">
-        <div class="av">A</div>
-        <div class="av">M</div>
-        <div class="av">L</div>
-        <div class="av">+</div>
-      </div>
-      <span class="sp-text">Be one of the <strong>first 500</strong> subscribers and shape the product</span>
-    </div>
-  </div>
+  );
+}
 
-  <div class="hero-right">
-    <div class="live-badge"><div class="live-dot"></div>Live data</div>
-    <div class="email-mockup">
-      <div class="em-bar">
-        <div class="em-dot" style="background:#ff5252"></div>
-        <div class="em-dot" style="background:#ffab40"></div>
-        <div class="em-dot" style="background:#00e676"></div>
-        <span class="em-title">Alphai Morning Brief — 07:00 CET</span>
-      </div>
-      <div class="em-body">
-        <div class="em-header">
-          <span class="em-logo">Alphai</span>
-          <span class="em-date">SUN 05 APR 2026 · #001</span>
-        </div>
-        <div class="em-tag">// Market snapshot</div>
-        <div class="em-grid">
-          <div class="em-cell"><div class="em-sym">BTC/EUR</div><div class="em-price">€87,420</div><div class="em-chg up">▲ +2.4%</div></div>
-          <div class="em-cell"><div class="em-sym">FTSE MIB</div><div class="em-price">36,842</div><div class="em-chg up">▲ +0.5%</div></div>
-          <div class="em-cell"><div class="em-sym">EUR/USD</div><div class="em-price">1.0842</div><div class="em-chg up">▲ +0.1%</div></div>
-          <div class="em-cell"><div class="em-sym">ETH/EUR</div><div class="em-price">€3,180</div><div class="em-chg up">▲ +1.2%</div></div>
-          <div class="em-cell"><div class="em-sym">DAX</div><div class="em-price">22,104</div><div class="em-chg dn">▼ -0.2%</div></div>
-          <div class="em-cell"><div class="em-sym">BTP 10Y</div><div class="em-price">3.82%</div><div class="em-chg dn">▼ -0.04</div></div>
-        </div>
-        <div class="em-signal">
-          <div class="em-signal-label">⚡ Today's signal</div>
-          <div class="em-signal-text"><strong>EUR/USD 1.08 support.</strong> If it breaks, watch EU equities. Fed minutes 20:00 CET — key event.</div>
-        </div>
-        <div class="em-tag">// Prediction markets</div>
-        <div class="em-pm">
-          <div class="em-pm-row"><span class="em-pm-event">Fed cut June</span><span class="em-pm-val up">68% ▲</span></div>
-          <div class="em-pm-row"><span class="em-pm-event">ECB cut April</span><span class="em-pm-val dn">41% ▼</span></div>
-          <div class="em-pm-row"><span class="em-pm-event">BTC &gt;€90K May</span><span class="em-pm-val up">54% ▲</span></div>
-        </div>
-        <div class="em-footer">
-          <span class="em-footer-logo">Alphai</span>
-          <span class="em-footer-note">Educational only · alphai.eu</span>
+/* =========================================================
+   NAV
+   ========================================================= */
+function Nav({ view, go }) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return (
+    <nav className={scrolled ? 'scrolled' : ''}>
+      <div className="nav-in">
+        <a href="#top" className="logo" onClick={(e) => { e.preventDefault(); go('home'); }}>Alphai<small>AI Edge in European Markets</small></a>
+        <div className="nav-right">
+          <div className="nav-links-group">
+            {view === 'home' ? (
+              <React.Fragment>
+                <a href="#brief" className="nav-link">The Brief</a>
+                <a href="#sample" className="nav-link">Sample</a>
+                <a href="#how" className="nav-link">How it works</a>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <a href="#top" className="nav-link" onClick={(e) => { e.preventDefault(); go('home'); }}>The Brief</a>
+                <a href="#pro-builder" className="nav-link">Builder</a>
+                <a href="#pro-pricing" className="nav-link">Pricing</a>
+              </React.Fragment>
+            )}
+            <a href="#pro" className="nav-link" onClick={(e) => { e.preventDefault(); go('pro'); }} style={view === 'pro' ? { color: 'var(--accent)' } : null}>Pro</a>
+          </div>
+          {view === 'home'
+            ? <a href="#subscribe" className="nav-cta" onClick={(e) => { e.preventDefault(); go('home', 'subscribe'); }}>Subscribe free</a>
+            : <a href="#pro-pricing" className="nav-cta" onClick={(e) => { e.preventDefault(); go('pro', 'pro-pricing'); }}>Get Pro</a>}
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </nav>
+  );
+}
 
-<div class="ticker-strip">
-  <div class="ticker-inner">
-    <div class="tick"><span class="tick-name">BTC/EUR</span>&nbsp;<span class="tick-val">€87,420</span>&nbsp;<span class="up">▲ +2.4%</span></div>
-    <div class="tick"><span class="tick-name">ETH/EUR</span>&nbsp;<span class="tick-val">€3,180</span>&nbsp;<span class="up">▲ +1.2%</span></div>
-    <div class="tick"><span class="tick-name">FTSE MIB</span>&nbsp;<span class="tick-val">36,842</span>&nbsp;<span class="up">▲ +0.5%</span></div>
-    <div class="tick"><span class="tick-name">DAX</span>&nbsp;<span class="tick-val">22,104</span>&nbsp;<span class="dn">▼ -0.2%</span></div>
-    <div class="tick"><span class="tick-name">BTP 10Y</span>&nbsp;<span class="tick-val">3.82%</span>&nbsp;<span class="dn">▼ -0.04</span></div>
-    <div class="tick"><span class="tick-name">EUR/USD</span>&nbsp;<span class="tick-val">1.0842</span>&nbsp;<span class="up">▲ +0.1%</span></div>
-    <div class="tick"><span class="tick-name">POLYMARKET</span>&nbsp;<span class="tick-val">68%</span>&nbsp;<span class="up">▲ +3pp</span></div>
-    <div class="tick"><span class="tick-name">SOL/EUR</span>&nbsp;<span class="tick-val">€142.4</span>&nbsp;<span class="up">▲ +4.1%</span></div>
-    <div class="tick"><span class="tick-name">BTC/EUR</span>&nbsp;<span class="tick-val">€87,420</span>&nbsp;<span class="up">▲ +2.4%</span></div>
-    <div class="tick"><span class="tick-name">ETH/EUR</span>&nbsp;<span class="tick-val">€3,180</span>&nbsp;<span class="up">▲ +1.2%</span></div>
-    <div class="tick"><span class="tick-name">FTSE MIB</span>&nbsp;<span class="tick-val">36,842</span>&nbsp;<span class="up">▲ +0.5%</span></div>
-    <div class="tick"><span class="tick-name">DAX</span>&nbsp;<span class="tick-val">22,104</span>&nbsp;<span class="dn">▼ -0.2%</span></div>
-    <div class="tick"><span class="tick-name">BTP 10Y</span>&nbsp;<span class="tick-val">3.82%</span>&nbsp;<span class="dn">▼ -0.04</span></div>
-    <div class="tick"><span class="tick-name">EUR/USD</span>&nbsp;<span class="tick-val">1.0842</span>&nbsp;<span class="up">▲ +0.1%</span></div>
-    <div class="tick"><span class="tick-name">POLYMARKET</span>&nbsp;<span class="tick-val">68%</span>&nbsp;<span class="up">▲ +3pp</span></div>
-    <div class="tick"><span class="tick-name">SOL/EUR</span>&nbsp;<span class="tick-val">€142.4</span>&nbsp;<span class="up">▲ +4.1%</span></div>
-  </div>
-</div>
+/* =========================================================
+   TICKER
+   ========================================================= */
+function TickerBar() {
+  const items = [...TICKER, ...TICKER];
+  return (
+    <div className="ticker">
+      <div className="ticker-track">
+        {items.map((t, i) => (
+          <div className="tk" key={i}>
+            <span className="sym">{t.sym}</span>
+            <span className="px">{t.px}</span>
+            <span className={`chg ${t.dir}`}>{t.chg}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-<section class="what-section" id="what">
-  <div class="section-eyebrow">What you get every morning</div>
-  <h2>Free knowledge.<br><em>Zero friction.</em></h2>
-  <p class="sec-sub">Three things. That's it. Musk Algorithm applied — we deleted everything else.</p>
-  <div class="three-points">
-    <div class="point-card reveal">
-      <div class="point-icon">📊</div>
-      <div class="point-title">Live market data</div>
-      <div class="point-desc">EU indices, BTC/EUR, BTP yields, EUR/USD. Data that actually matters for European traders — not US-centric noise.</div>
-      <div class="point-tag">Every morning</div>
+/* =========================================================
+   HERO
+   ========================================================= */
+function HeroBriefCard() {
+  return (
+    <div className="brief-card">
+      <div className="bc-head">
+        <div className="bc-brand">Alphai</div>
+        <div className="bc-date">Tue · 02 Jun · 07:00 CET</div>
+      </div>
+      <div className="bc-body">
+        <div className="bc-kicker">Today’s tape</div>
+        <div className="bc-lede">Milan leads Europe as BTP spreads tighten to a 14-month low.</div>
+        <div className="bc-rows">
+          {HERO_ROWS.map((r, i) => (
+            <div className="bc-row" key={i}>
+              <span className="nm">{r.nm}</span>
+              <span className="val"><span style={{ color: 'var(--text)' }}>{r.val}</span><span className={`chg ${r.dir}`}>{r.chg}</span></span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
-    <div class="point-card reveal">
-      <div class="point-icon">⚡</div>
-      <div class="point-title">One signal to watch</div>
-      <div class="point-desc">We run the algorithm so you don't have to. One key insight per day — the thing that will actually move your morning.</div>
-      <div class="point-tag">AI-powered</div>
-    </div>
-    <div class="point-card reveal">
-      <div class="point-icon">🔮</div>
-      <div class="point-title">Prediction market edge</div>
-      <div class="point-desc">Polymarket &amp; Kalshi probabilities on macro events. What the smart money is actually pricing in — before it hits the news.</div>
-      <div class="point-tag">Unique in EU</div>
-    </div>
-  </div>
-</section>
+  );
+}
 
-<section class="how-section" id="how">
-  <div class="section-eyebrow">How it works</div>
-  <h2>Three steps.<br><em>One email.</em></h2>
-  <div class="steps">
-    <div class="step reveal">
-      <div class="step-num">01</div>
-      <div class="step-title">You subscribe</div>
-      <div class="step-desc">Enter your email. 10 seconds. No forms, no onboarding, no preferences to set. Just your email.</div>
+function Hero() {
+  return (
+    <div className="wrap" id="hero-top">
+      <div className="hero">
+        <div className="hero-grid">
+          <div>
+            <Reveal className="eyebrow" as="div"><span className="ln"></span>The Morning Brief · Free, daily</Reveal>
+            <Reveal as="h1" delay={60}>
+              Europe’s market edge,<br /><em>in your inbox</em> by 7am.
+            </Reveal>
+            <Reveal as="p" className="sub" delay={120}>
+              One sharp, bilingual read on the markets the US desks ignore — <b>EU equities, MiCA crypto and prediction markets</b>. Data, not noise. <b>Free, forever.</b>
+            </Reveal>
+            <Reveal delay={180} id="subscribe">
+              <Signup />
+              <div className="signup-note">
+                <span className="avatars"><span></span><span></span><span></span><span></span></span>
+                Join 4,200+ European traders · no spam · unsubscribe anytime
+              </div>
+            </Reveal>
+          </div>
+          <Reveal className="hero-visual" delay={120}>
+            <HeroBriefCard />
+          </Reveal>
+        </div>
+      </div>
     </div>
-    <div class="step reveal">
-      <div class="step-num">02</div>
-      <div class="step-title">AI builds your brief</div>
-      <div class="step-desc">Every night, our AI pulls market data across EU indices, crypto and prediction markets. Synthesizes it into one sharp brief.</div>
-    </div>
-    <div class="step reveal">
-      <div class="step-num">03</div>
-      <div class="step-title">Wake up sharp</div>
-      <div class="step-desc">7:00 AM CET. Your brief is in your inbox. Read it in 5 minutes. Start the day with an edge.</div>
-    </div>
-  </div>
-</section>
+  );
+}
 
-<div class="musk-strip">
-  <div class="musk-item">
-    <div>
-      <div class="musk-rule">Rule 01</div>
-      <div class="musk-text">Delete what's not essential</div>
-    </div>
-  </div>
-  <div class="musk-sep"></div>
-  <div class="musk-item">
-    <div>
-      <div class="musk-rule">Rule 04</div>
-      <div class="musk-text">If a timeline is long, it's wrong</div>
-    </div>
-  </div>
-  <div class="musk-sep"></div>
-  <div class="musk-item">
-    <div>
-      <div class="musk-rule">Rule 06</div>
-      <div class="musk-text">Leader on the front lines</div>
-    </div>
-  </div>
-  <div class="musk-sep"></div>
-  <div class="musk-item">
-    <div>
-      <div class="musk-rule">Applied to Alphai</div>
-      <div class="musk-text">3 data points. 1 signal. 1 email. Free.</div>
-    </div>
-  </div>
-</div>
+/* =========================================================
+   FEATURES
+   ========================================================= */
+function Features() {
+  return (
+    <section id="brief">
+      <div className="wrap">
+        <Reveal className="sec-tag" as="div">What’s inside</Reveal>
+        <Reveal as="h2" className="h2">Three markets. <em>One read.</em></Reveal>
+        <Reveal as="p" className="sec-sub">Every morning, the moves that matter across European markets — distilled into something you can read with your coffee.</Reveal>
+        <div className="feature-grid">
+          {FEATURES.map((f, i) => (
+            <Reveal className="fcard" key={i} delay={i * 90}>
+              <span className="tag">{f.tag}</span>
+              <h3>{f.h}</h3>
+              <p>{f.p}</p>
+              <div className="spark-row">
+                <div className="spark-meta">
+                  <div className="lbl">{f.lbl}</div>
+                  <div className="num" style={{ color: f.dir === 'pos' ? 'var(--pos)' : 'var(--neg)' }}>{f.num}</div>
+                </div>
+                <Sparkline series={f.series} color={f.dir === 'pos' ? 'var(--pos)' : 'var(--neg)'} w={140} h={48} />
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-<section class="cta-section">
-  <div class="cta-free-tag">100% Free — Always</div>
-  <h2>Start tomorrow.<br><em>7AM in your inbox.</em></h2>
-  <p class="cta-sub">Join the waitlist now. First subscribers get early access to every new feature we ship.</p>
-  <div class="cta-urgency">⚡ We're in early access — spots are limited at launch</div>
-  <div class="cta-form">
-    <form class="form-wrap" data-beehiiv-form="90aebe7a-b827-4bf3-932c-fda3d548bf45" style="max-width:100%">
-      <input type="email" id="cta-email" name="email" class="form-input" placeholder="your@email.com" required autocomplete="email">
-      <button type="submit" class="form-submit">Join Free →</button>
-    </form>
-    <p class="cta-note">Free forever · Unsubscribe anytime · No credit card</p>
-  </div>
-</section>
+/* =========================================================
+   SAMPLE BRIEF READER (IT/EN)
+   ========================================================= */
+function Reader() {
+  const [lang, setLang] = useState('en');
+  const b = BRIEF[lang];
+  return (
+    <section style={{ background: 'var(--noir2)' }} id="sample">
+      <div className="wrap">
+        <Reveal className="sec-tag" as="div">A real issue</Reveal>
+        <Reveal as="h2" className="h2">See <em>yesterday’s brief.</em></Reveal>
+        <Reveal as="p" className="sec-sub">Switch between English and Italian — every issue ships in both.</Reveal>
+        <Reveal className="reader">
+          <div className="reader-bar">
+            <div className="reader-meta">
+              <span className="reader-dot"></span>
+              <span className="t">{b.read}</span>
+            </div>
+            <div className="lang-toggle">
+              <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button>
+              <button className={lang === 'it' ? 'active' : ''} onClick={() => setLang('it')}>IT</button>
+            </div>
+          </div>
+          <div className="reader-body">
+            <div className="fade-swap" key={lang}>
+              <div className="reader-kicker">{b.kicker}</div>
+              <h3 className="reader-headline">{b.headline[0]}<em>{b.headline[1]}</em>{b.headline[2]}</h3>
+              <p className="reader-lede">{b.lede}</p>
+              <p className="reader-p">{b.p1[0]}<b>{b.p1[1]}</b>{b.p1[2]}<b>{b.p1[3]}</b>{b.p1[4]}</p>
+              <p className="reader-p">{b.p2[0]}<b>{b.p2[1]}</b>{b.p2[2]}</p>
+            </div>
+            <div className="reader-side fade-swap" key={lang + '-s'}>
+              {b.stats.map((s, i) => (
+                <div className="mini-stat" key={i}>
+                  <div className="ms-l">{s.l}</div>
+                  <div className="ms-v" style={{ color: s.dir === 'pos' ? 'var(--pos)' : 'var(--text)' }}>{s.v}</div>
+                  <div className="ms-sub">{s.s}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
 
-<footer>
-  <div class="footer-logo">Alphai</div>
-  <ul class="footer-links">
-    <li><a href="#">Privacy</a></li>
-    <li><a href="#">Terms</a></li>
-    <li><a href="https://x.com" target="_blank">X/Twitter</a></li>
-    <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
-  </ul>
-  <div class="footer-copy">© 2026 Alphai · alphai.eu · Educational analysis only</div>
-</footer>
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+function How() {
+  const steps = [
+    { n: '01', h: 'Subscribe in 10 seconds', p: 'One email field. No credit card, no onboarding call. You’re on the list and that’s it.', m: '↳ free, forever' },
+    { n: '02', h: 'Read at 07:00 CET', p: 'A tight, bilingual brief lands every weekday morning — the EU moves that matter, in plain language.', m: '↳ Mon–Fri, IT / EN' },
+    { n: '03', h: 'Spot the edge', p: 'Charts, odds and a clear take. When an idea grabs you, you can have us backtest it with Alphai Pro.', m: '↳ then test it →' },
+  ];
+  return (
+    <section id="how">
+      <div className="wrap">
+        <Reveal className="sec-tag" as="div">How it works</Reveal>
+        <Reveal as="h2" className="h2">From coffee to <em>conviction.</em></Reveal>
+        <Reveal as="p" className="sec-sub">No app to learn, no dashboard to babysit. Just the read that sets up your trading day.</Reveal>
+        <Reveal className="steps">
+          {steps.map((s, i) => (
+            <div className="step" key={i}>
+              <div className="step-n">{s.n}</div>
+              <h3>{s.h}</h3>
+              <p>{s.p}</p>
+              <div className="micro">{s.m}</div>
+            </div>
+          ))}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
 
-<script>
-const cur = document.getElementById('cur');
-const ring = document.getElementById('ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove', e => {
-  mx=e.clientX; my=e.clientY;
-  cur.style.left=mx+'px'; cur.style.top=my+'px';
-});
-(function loop(){
-  rx+=(mx-rx)*.1; ry+=(my-ry)*.1;
-  ring.style.left=rx+'px'; ring.style.top=ry+'px';
-  requestAnimationFrame(loop);
-})();
-document.querySelectorAll('a,button,input').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ ring.style.width='44px'; ring.style.height='44px'; });
-  el.addEventListener('mouseleave',()=>{ ring.style.width='28px'; ring.style.height='28px'; });
-});
-window.addEventListener('scroll',()=>{
-  document.getElementById('nav').classList.toggle('stuck', scrollY>40);
-});
-const obs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }});
-},{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+/* =========================================================
+   FINAL CTA (home)
+   ========================================================= */
+function FinalCTA() {
+  return (
+    <section>
+      <div className="wrap">
+        <Reveal className="final">
+          <div className="sec-tag" style={{ marginBottom: 18 }}>Join the list</div>
+          <h2 className="h2">Read the market <em>before</em> it moves.</h2>
+          <p>Free, bilingual, and built for European traders. Your first brief lands tomorrow morning.</p>
+          <Signup />
+          <div className="signup-note">
+            <span className="avatars"><span></span><span></span><span></span></span>
+            4,200+ subscribers · unsubscribe anytime
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+function Footer({ go }) {
+  return (
+    <footer>
+      <div className="wrap foot-in">
+        <div>
+          <div className="foot-brand">Alphai</div>
+          <div className="foot-tag">AI Edge in European Markets</div>
+          <div className="foot-links">
+            <a href="#top" className="nav-link" onClick={(e) => { e.preventDefault(); go('home'); }}>The Brief</a>
+            <a href="#pro" className="nav-link" onClick={(e) => { e.preventDefault(); go('pro'); }}>Pro</a>
+            <a href="#" className="nav-link" onClick={(e) => e.preventDefault()}>Privacy</a>
+            <a href="#" className="nav-link" onClick={(e) => e.preventDefault()}>Terms</a>
+            <a href="#" className="nav-link" onClick={(e) => e.preventDefault()}>X</a>
+          </div>
+        </div>
+        <div className="foot-dis">
+          Alphai provides educational market analysis only and does not constitute investment advice, a recommendation, or a solicitation to trade. Backtested results are hypothetical, do not account for trading costs, slippage, or live execution, and past performance does not guarantee future results. Trading involves risk of loss.<br /><br />© 2026 Alphai · alphai.eu
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* =========================================================
+   RULE BUILDER (Pro centerpiece)
+   ========================================================= */
+function Token({ field, value, onChange, alt = false }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  const opts = RB[field];
+  const current = opts.find(o => o.id === value) || opts[0];
+
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown', onDoc);
+    return () => document.removeEventListener('mousedown', onDoc);
+  }, [open]);
+
+  return (
+    <span className="tok-select" ref={ref}>
+      <button className={`tok-btn ${alt ? 'alt' : ''}`} onClick={() => setOpen(o => !o)}>
+        {current.label}<span className="car">▼</span>
+      </button>
+      {open && (
+        <div className="tok-menu">
+          {opts.map(o => (
+            <button key={o.id} className={o.id === value ? 'sel' : ''}
+              onClick={() => { onChange(o.id); setOpen(false); }}>
+              {o.id === value ? '✓ ' : ''}{o.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </span>
+  );
+}
+
+function RuleBuilder() {
+  const [state, setState] = useState({
+    asset: 'mib', indicator: 'rsi', op: 'below', level: '30', side: 'buy', exit: 't5',
+  });
+  const [result, setResult] = useState(null);
+  const [running, setRunning] = useState(false);
+  const [runId, setRunId] = useState(0);
+
+  const set = (field) => (id) => { setState(s => ({ ...s, [field]: id })); };
+
+  const run = () => {
+    setRunning(true);
+    setResult(null);
+    setTimeout(() => {
+      setResult(runBacktest(state));
+      setRunId(n => n + 1);
+      setRunning(false);
+    }, 850);
+  };
+
+  const labelOf = (f, id) => (RB[f].find(o => o.id === id) || {}).label;
+
+  return (
+    <div className="builder-grid">
+      <div className="builder">
+        <div className="builder-label"><span style={{ color: 'var(--accent)' }}>◆</span> Describe a strategy — in plain English</div>
+        <div className="sentence">
+          When <Token field="asset" value={state.asset} onChange={set('asset')} />
+          {' '}<Token field="indicator" value={state.indicator} onChange={set('indicator')} alt />
+          {' '}<Token field="op" value={state.op} onChange={set('op')} alt />
+          {' '}<Token field="level" value={state.level} onChange={set('level')} alt />,
+          {' '}<Token field="side" value={state.side} onChange={set('side')} />
+          {' '}and exit at <Token field="exit" value={state.exit} onChange={set('exit')} alt />.
+        </div>
+        <div className="builder-run">
+          <button className="btn btn-primary" onClick={run} disabled={running}>
+            {running ? 'Running backtest…' : 'Run backtest →'}
+          </button>
+        </div>
+      </div>
+
+      <div className="result">
+        {!result && !running && (
+          <div className="result-empty">
+            <div className="ph">equity curve · runs here</div>
+            <p>Build a rule, hit run — see a sample verdict.</p>
+          </div>
+        )}
+        {running && (
+          <div className="result-empty">
+            <div className="ph" style={{ borderStyle: 'solid', borderColor: 'var(--accent)' }}>
+              <span style={{ color: 'var(--accent)' }}>testing 5y of data…</span>
+            </div>
+            <p>Crunching entries, exits & drawdowns.</p>
+          </div>
+        )}
+        {result && (
+          <div className="fade-swap" key={runId}>
+            <div className="res-top">
+              <div className="res-title">{labelOf('indicator', state.indicator)} {labelOf('op', state.op)} {labelOf('level', state.level)}</div>
+              <div className={`verdict ${result.verdict}`}>{result.vlabel}</div>
+            </div>
+            <div className="res-sub">{labelOf('asset', state.asset)} · 5-year backtest · {labelOf('side', state.side)} / exit {labelOf('exit', state.exit)}</div>
+            <div className="res-hero">
+              <div className="res-big" style={{ color: result.ret >= 0 ? 'var(--pos)' : 'var(--neg)' }}>
+                {result.ret >= 0 ? '+' : ''}{result.ret}%
+              </div>
+              <div className="res-vs">vs buy &amp; hold <span style={{ color: result.bench >= 0 ? 'var(--pos)' : 'var(--neg)' }}>{result.bench >= 0 ? '+' : ''}{result.bench}%</span></div>
+            </div>
+            <EquityCurve ys={result.curve} animateKey={runId} />
+            <div className="res-stats">
+              <div className="res-stat"><div className="sl">Sharpe</div><div className="sv" style={{ color: 'var(--accent)' }}>{result.sharpe.toFixed(2)}</div></div>
+              <div className="res-stat"><div className="sl">Win rate</div><div className="sv">{result.win}%</div></div>
+              <div className="res-stat"><div className="sl">Max DD</div><div className="sv" style={{ color: 'var(--neg)' }}>{result.dd}%</div></div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Pro({ go }) {
+  return (
+    <section id="pro">
+      <div className="wrap">
+        <Reveal className="sec-tag" as="div">Alphai Pro</Reveal>
+        <Reveal as="h2" className="h2">The brief is free. <em>Testing your ideas</em> is the next step.</Reveal>
+        <Reveal as="p" className="sec-sub">Got a strategy you keep wondering about? Describe it in plain English — we backtest it on European markets and send back a verdict.</Reveal>
+        <Reveal className="pro-shell">
+          <div className="pro-top">
+            <div>
+              <div className="pro-badges">
+                <span className="pbadge green">● No code</span>
+                <span className="pbadge gold">24h turnaround</span>
+              </div>
+              <h3>Try it now — <em>build a rule</em> and see a sample report.</h3>
+            </div>
+          </div>
+          <RuleBuilder />
+          <div className="pro-foot">
+            <div className="pro-price">From <b>€20</b>/mo · 3 backtests · branded PDF · cancel anytime</div>
+            <button className="btn btn-primary" onClick={() => go('pro')}>See Alphai Pro →</button>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================
+   PRO PAGE (full backtest sales page)
+   ========================================================= */
+const PROBLEMS = [
+  { n: '01', h: 'Coding is a wall', p: 'Backtesting means Python, pandas, data cleaning. Most traders don’t have weeks to learn it just to test one idea.' },
+  { n: '02', h: 'Tools cost a fortune', p: 'TrendSpider, Trade Ideas — €100–200/month, steep learning curves, and built for US markets you don’t even trade.' },
+  { n: '03', h: 'Europe is ignored', p: 'FTSE MIB, BTP yields, MiCA-regulated crypto, EU prediction markets — the data American platforms barely cover.' },
+];
+
+const PROSTEPS = [
+  { n: '01', h: 'Describe your strategy', p: '“Buy FTSE MIB when RSI drops below 30, sell at +5%.” Plain English is enough. No syntax, no setup.', m: '↳ via the builder' },
+  { n: '02', h: 'We backtest it', p: 'We run your idea against years of historical European market data — entries, exits, drawdowns, the lot.', m: '↳ within 24 hours' },
+  { n: '03', h: 'You get the report', p: 'A branded PDF: equity curve, win rate, Sharpe, max drawdown — and a human verdict on whether the edge is real.', m: '↳ clear yes / no / maybe' },
+];
+
+const MOATS = [
+  { ic: '[ EU ]', h: 'European-first', p: 'FTSE MIB, DAX, CAC, BTP yields — coverage US tools treat as an afterthought.' },
+  { ic: '[ MiCA ]', h: 'Regulated crypto', p: 'The EU’s distinct crypto regime, modeled the way European traders actually trade it.' },
+  { ic: '[ PM ]', h: 'Prediction markets', p: 'Polymarket, Kalshi — event-driven edges almost nobody backtests properly.' },
+  { ic: '[ AI ]', h: 'AI-assisted', p: 'We test fast and explain clearly — so you get a verdict, not a data dump.' },
+];
+
+const FEATS = [
+  ['3 backtests per month', ' on any European asset'],
+  ['Branded PDF report', ' with a verdict on each'],
+  ['24-hour turnaround', ''],
+  ['Plain-English input', ' — no code, ever'],
+  ['Email support', ' from the founder directly'],
+];
+
+const FAQS = [
+  { q: 'Do I need to know how to code?', a: 'No. You describe your idea in plain English and we handle everything technical. That’s the entire point.' },
+  { q: 'Which markets can you test?', a: 'European equities and indices (FTSE MIB, DAX, CAC and more), ETFs, MiCA-regulated crypto, and prediction markets like Polymarket. If you trade it in Europe, we can likely test it.' },
+  { q: 'Is this investment advice?', a: 'No. Alphai provides educational market analysis only. A backtest shows how a strategy would have performed historically — it is not a prediction or a recommendation to trade.' },
+  { q: 'How fast do I get my report?', a: 'Within 24 hours of submitting a clear strategy. Most come back the same day.' },
+  { q: 'What if I want more than 3 backtests?', a: 'Reply to your welcome email and we’ll sort out a higher-volume plan. Early subscribers get flexibility.' },
+];
+
+function FaqItem({ q, a, open, onToggle }) {
+  return (
+    <div className="faq-item">
+      <div className={`faq-q ${open ? 'open' : ''}`} onClick={onToggle}>
+        <span className="qrow">{q}</span>
+        <span className="plus">+</span>
+      </div>
+      <div className={`faq-a ${open ? 'open' : ''}`}>{a}</div>
+    </div>
+  );
+}
+
+function ProPage({ go }) {
+  const [openFaq, setOpenFaq] = useState(0);
+
+  return (
+    <div className="view" key="pro">
+      <div className="wrap">
+        <div className="pro-hero">
+          <Reveal className="eyebrow center" as="div"><span className="ln"></span>Alphai Pro · Concierge Backtesting<span className="ln"></span></Reveal>
+          <Reveal as="h1" delay={60}>Test any idea. <em>We run the numbers</em> for you.</Reveal>
+          <Reveal as="p" className="sub" delay={120}>Send us a strategy in plain English. We backtest it on <b>European markets</b> — EU equities, MiCA crypto, prediction markets — and send back a clear verdict. <b>No code. No spreadsheets.</b></Reveal>
+          <Reveal as="p" className="note" delay={150}>The paid tier behind the free Morning Brief · answered in 24 hours.</Reveal>
+          <Reveal className="pro-hero-ctas" delay={180}>
+            <a href="#pro-pricing" className="btn btn-primary">See pricing →</a>
+            <a href="#pro-builder" className="btn btn-ghost">Try the builder</a>
+          </Reveal>
+          <Reveal className="strip" delay={220}>
+            <div className="strip-cell"><div className="strip-val">24h</div><div className="strip-lbl">Turnaround</div></div>
+            <div className="strip-cell"><div className="strip-val">0</div><div className="strip-lbl">Lines of code</div></div>
+            <div className="strip-cell"><div className="strip-val">EU</div><div className="strip-lbl">Market focus</div></div>
+            <div className="strip-cell"><div className="strip-val">€20<span>/mo</span></div><div className="strip-lbl">From</div></div>
+          </Reveal>
+        </div>
+      </div>
+
+      <section id="pro-builder">
+        <div className="wrap">
+          <Reveal className="sec-tag" as="div">Try it now</Reveal>
+          <Reveal as="h2" className="h2">Build a rule. <em>See a verdict.</em></Reveal>
+          <Reveal as="p" className="sec-sub">This is the live preview of what we do for you — point and click a strategy together, run it, read the call.</Reveal>
+          <Reveal className="pro-shell">
+            <RuleBuilder />
+          </Reveal>
+        </div>
+      </section>
+
+      <section style={{ background: 'var(--noir2)' }}>
+        <div className="wrap">
+          <Reveal className="sec-tag" as="div">The problem</Reveal>
+          <Reveal as="h2" className="h2">You have ideas. <em>Testing them</em> is painful.</Reveal>
+          <Reveal as="p" className="sec-sub">Every retail trader has a hunch. Almost none can prove whether it works before risking real money.</Reveal>
+          <div className="prob-grid">
+            {PROBLEMS.map((p, i) => (
+              <Reveal className="prob" key={i} delay={i * 90}>
+                <div className="prob-num">{p.n}</div>
+                <h3>{p.h}</h3>
+                <p>{p.p}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="wrap">
+          <Reveal className="sec-tag" as="div">How it works</Reveal>
+          <Reveal as="h2" className="h2">From idea to verdict in <em>three steps.</em></Reveal>
+          <Reveal as="p" className="sec-sub">You describe. We test. You decide — with real data instead of a gut feeling.</Reveal>
+          <Reveal className="steps">
+            {PROSTEPS.map((s, i) => (
+              <div className="step" key={i}>
+                <div className="step-n">{s.n}</div>
+                <h3>{s.h}</h3>
+                <p>{s.p}</p>
+                <div className="micro">{s.m}</div>
+              </div>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      <section style={{ background: 'var(--noir2)' }}>
+        <div className="wrap">
+          <Reveal className="sec-tag" as="div">The deliverable</Reveal>
+          <Reveal as="h2" className="h2">This is what lands <em>in your inbox.</em></Reveal>
+          <Reveal as="p" className="sec-sub">A real backtest we ran: RSI mean-reversion on the FTSE MIB, five years of data.</Reveal>
+          <Reveal className="proof">
+            <div className="result" style={{ minHeight: 'auto' }}>
+              <div className="res-top">
+                <div className="res-title">RSI(14) mean reversion</div>
+                <div className="verdict fragile">Fragile edge</div>
+              </div>
+              <div className="res-sub">FTSE MIB · Jun 2021 – May 2026 · buy / exit +5%</div>
+              <div className="res-hero">
+                <div className="res-big" style={{ color: 'var(--pos)' }}>+14.2%</div>
+                <div className="res-vs">vs buy &amp; hold <span style={{ color: 'var(--neg)' }}>−7.3%</span></div>
+              </div>
+              <EquityCurve ys={[52, 48, 55, 40, 44, 30, 36, 22, 34, 26, 38, 20, 28, 16, 24, 12, 20, 10, 14, 11, 9, 8]} animateKey="proof" />
+              <div className="res-stats">
+                <div className="res-stat"><div className="sl">Sharpe</div><div className="sv" style={{ color: 'var(--accent)' }}>0.40</div></div>
+                <div className="res-stat"><div className="sl">Win rate</div><div className="sv">66.7%</div></div>
+                <div className="res-stat"><div className="sl">Max DD</div><div className="sv" style={{ color: 'var(--neg)' }}>−13.8%</div></div>
+              </div>
+            </div>
+            <div className="proof-text">
+              <h3>Not a screenshot. A verdict.</h3>
+              <p>Most tools dump numbers and leave you to interpret them. We end every report with a plain-language call on whether the edge is real, fragile, or noise.</p>
+              <div className="check"><span className="check-i">→</span><span><b>Equity curve</b> vs buy &amp; hold benchmark</span></div>
+              <div className="check"><span className="check-i">→</span><span><b>Risk metrics</b> — Sharpe, drawdown, win rate, hold time</span></div>
+              <div className="check"><span className="check-i">→</span><span><b>Trade log</b> — every entry and exit, fully transparent</span></div>
+              <div className="check"><span className="check-i">→</span><span><b>Human verdict</b> — what the data actually means for you</span></div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section>
+        <div className="wrap">
+          <Reveal className="sec-tag" as="div">Why Alphai</Reveal>
+          <Reveal as="h2" className="h2">Built for the markets <em>others skip.</em></Reveal>
+          <Reveal as="p" className="sec-sub">Our edge isn’t speed — it’s the data and the focus.</Reveal>
+          <div className="moat-grid">
+            {MOATS.map((m, i) => (
+              <Reveal className="moat" key={i} delay={i * 70}>
+                <div className="moat-ic">{m.ic}</div>
+                <h4>{m.h}</h4>
+                <p>{m.p}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="pro-pricing" style={{ background: 'var(--noir2)' }}>
+        <div className="wrap">
+          <Reveal className="sec-tag" as="div">Pricing</Reveal>
+          <Reveal as="h2" className="h2">One plan. <em>Cancel anytime.</em></Reveal>
+          <Reveal as="p" className="sec-sub">Start with a few ideas a month. Upgrade when your strategies multiply.</Reveal>
+          <Reveal className="pricing">
+            <div className="price-card">
+              <div className="price-badge">Alphai Pro</div>
+              <div className="price">€20<span>/mo</span></div>
+              <div className="price-note">or €192/year — save 20%</div>
+              <div className="price-feats">
+                {FEATS.map((f, i) => (
+                  <div className="pf" key={i}><span className="pf-i">✓</span><span><b>{f[0]}</b>{f[1]}</span></div>
+                ))}
+              </div>
+              <a href="#pro-pricing" className="btn btn-primary" onClick={(e) => e.preventDefault()}>Start testing →</a>
+              <div className="guarantee">First backtest not useful? Full refund, no questions.</div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section>
+        <div className="wrap">
+          <Reveal className="sec-tag" as="div">FAQ</Reveal>
+          <Reveal as="h2" className="h2">Questions, <em>answered.</em></Reveal>
+          <Reveal className="faq-grid">
+            {FAQS.map((f, i) => (
+              <FaqItem key={i} q={f.q} a={f.a} open={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? -1 : i)} />
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      <section>
+        <div className="wrap">
+          <Reveal className="final">
+            <div className="sec-tag" style={{ marginBottom: 18 }}>Stop guessing</div>
+            <h2 className="h2">Your next trade shouldn’t rest on <em>a hunch.</em></h2>
+            <p>Send us the idea — we’ll tell you if the data backs it. Or start with the free brief and upgrade when you’re ready.</p>
+            <div className="pro-hero-ctas">
+              <a href="#pro-pricing" className="btn btn-primary">Start testing — €20/mo →</a>
+              <button className="btn btn-ghost" onClick={() => go('home')}>← Back to the free Brief</button>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* =========================================================
+   APP — two-view router
+   ========================================================= */
+function hardScrollTop() {
+  const prev = document.documentElement.style.scrollBehavior;
+  document.documentElement.style.scrollBehavior = 'auto';
+  window.scrollTo(0, 0);
+  requestAnimationFrame(() => { document.documentElement.style.scrollBehavior = prev; });
+}
+
+function App() {
+  const [view, setView] = useState('home');
+  useReveal(view);
+
+  const go = useCallback((next, anchor) => {
+    setView(prev => {
+      if (prev === next) {
+        requestAnimationFrame(() => {
+          const el = anchor && document.getElementById(anchor);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          else hardScrollTop();
+        });
+        return prev;
+      }
+      return next;
+    });
+    if (anchor) {
+      setTimeout(() => {
+        const el = document.getElementById(anchor);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 90);
+    } else {
+      requestAnimationFrame(hardScrollTop);
+      setTimeout(hardScrollTop, 60);
+    }
+  }, []);
+
+  useEffect(() => {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    if (location.hash) return;
+    const t0 = requestAnimationFrame(hardScrollTop);
+    const ids = [60, 180, 360, 650].map(ms => setTimeout(hardScrollTop, ms));
+    return () => { cancelAnimationFrame(t0); ids.forEach(clearTimeout); };
+  }, []);
+
+  return (
+    <React.Fragment>
+      <Nav view={view} go={go} />
+
+      {view === 'home' ? (
+        <div className="view" key="home" id="top">
+          <Hero />
+          <TickerBar />
+          <Features />
+          <Reader />
+          <How />
+          <Pro go={go} />
+          <FinalCTA />
+        </div>
+      ) : (
+        <ProPage go={go} />
+      )}
+
+      <Footer go={go} />
+    </React.Fragment>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
-<script type="text/javascript" async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
 </body>
 </html>
